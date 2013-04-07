@@ -1,0 +1,286 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EEE16BAE1710D68900F6AF6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE16BAD1710D68900F6AF6B /* Foundation.framework */; };
+		EEE16BB11710D68900F6AF6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BB01710D68900F6AF6B /* main.m */; };
+		EEE16BB51710D68A00F6AF6B /* momdec.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EEE16BB41710D68A00F6AF6B /* momdec.1 */; };
+		EEE16BBC1710D6A300F6AF6B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE16BBB1710D6A300F6AF6B /* CoreData.framework */; };
+		EEE16BC21710DBB800F6AF6B /* NSEntityDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BC11710DBB800F6AF6B /* NSEntityDescription+xmlElement.m */; };
+		EEE16BC51710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BC41710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.m */; };
+		EEE16BC81710E45700F6AF6B /* NSAttributeDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BC71710E45700F6AF6B /* NSAttributeDescription+xmlElement.m */; };
+		EEE16BCB1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BCA1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m */; };
+		EEE16BCE1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BCD1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EEE16BA81710D68900F6AF6B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				EEE16BB51710D68A00F6AF6B /* momdec.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EE2760C717121F7C0023821E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		EEE16BAA1710D68900F6AF6B /* momdec */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = momdec; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEE16BAD1710D68900F6AF6B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EEE16BB01710D68900F6AF6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EEE16BB31710D68A00F6AF6B /* momdec-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "momdec-Prefix.pch"; sourceTree = "<group>"; };
+		EEE16BB41710D68A00F6AF6B /* momdec.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = momdec.1; sourceTree = "<group>"; };
+		EEE16BBB1710D6A300F6AF6B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		EEE16BC01710DBB800F6AF6B /* NSEntityDescription+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEntityDescription+xmlElement.h"; sourceTree = "<group>"; };
+		EEE16BC11710DBB800F6AF6B /* NSEntityDescription+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEntityDescription+xmlElement.m"; sourceTree = "<group>"; };
+		EEE16BC31710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+xmlElement.h"; sourceTree = "<group>"; };
+		EEE16BC41710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+xmlElement.m"; sourceTree = "<group>"; };
+		EEE16BC61710E45700F6AF6B /* NSAttributeDescription+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+xmlElement.h"; sourceTree = "<group>"; };
+		EEE16BC71710E45700F6AF6B /* NSAttributeDescription+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributeDescription+xmlElement.m"; sourceTree = "<group>"; };
+		EEE16BC91710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSRelationshipDescription+xmlElement.h"; sourceTree = "<group>"; };
+		EEE16BCA1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSRelationshipDescription+xmlElement.m"; sourceTree = "<group>"; };
+		EEE16BCC1710E55800F6AF6B /* NSPropertyDescription+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPropertyDescription+xmlElement.h"; sourceTree = "<group>"; };
+		EEE16BCD1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPropertyDescription+xmlElement.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EEE16BA71710D68900F6AF6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE16BBC1710D6A300F6AF6B /* CoreData.framework in Frameworks */,
+				EEE16BAE1710D68900F6AF6B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EEE16BA11710D68900F6AF6B = {
+			isa = PBXGroup;
+			children = (
+				EEE16BAF1710D68900F6AF6B /* momdec */,
+				EEE16BAC1710D68900F6AF6B /* Frameworks */,
+				EEE16BAB1710D68900F6AF6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EEE16BAB1710D68900F6AF6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EEE16BAA1710D68900F6AF6B /* momdec */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EEE16BAC1710D68900F6AF6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEE16BBB1710D6A300F6AF6B /* CoreData.framework */,
+				EEE16BAD1710D68900F6AF6B /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EEE16BAF1710D68900F6AF6B /* momdec */ = {
+			isa = PBXGroup;
+			children = (
+				EEE16BB01710D68900F6AF6B /* main.m */,
+				EEE16BC31710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.h */,
+				EEE16BC41710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.m */,
+				EEE16BC01710DBB800F6AF6B /* NSEntityDescription+xmlElement.h */,
+				EEE16BC11710DBB800F6AF6B /* NSEntityDescription+xmlElement.m */,
+				EEE16BC61710E45700F6AF6B /* NSAttributeDescription+xmlElement.h */,
+				EEE16BC71710E45700F6AF6B /* NSAttributeDescription+xmlElement.m */,
+				EEE16BC91710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.h */,
+				EEE16BCA1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m */,
+				EEE16BCC1710E55800F6AF6B /* NSPropertyDescription+xmlElement.h */,
+				EEE16BCD1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m */,
+				EEE16BB41710D68A00F6AF6B /* momdec.1 */,
+				EEE16BB21710D68A00F6AF6B /* Supporting Files */,
+				EE2760C717121F7C0023821E /* README.md */,
+			);
+			path = momdec;
+			sourceTree = "<group>";
+		};
+		EEE16BB21710D68A00F6AF6B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EEE16BB31710D68A00F6AF6B /* momdec-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EEE16BA91710D68900F6AF6B /* momdec */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEE16BB81710D68A00F6AF6B /* Build configuration list for PBXNativeTarget "momdec" */;
+			buildPhases = (
+				EEE16BA61710D68900F6AF6B /* Sources */,
+				EEE16BA71710D68900F6AF6B /* Frameworks */,
+				EEE16BA81710D68900F6AF6B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = momdec;
+			productName = momdec;
+			productReference = EEE16BAA1710D68900F6AF6B /* momdec */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEE16BA21710D68900F6AF6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Tom Harrington";
+			};
+			buildConfigurationList = EEE16BA51710D68900F6AF6B /* Build configuration list for PBXProject "momdec" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EEE16BA11710D68900F6AF6B;
+			productRefGroup = EEE16BAB1710D68900F6AF6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EEE16BA91710D68900F6AF6B /* momdec */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EEE16BA61710D68900F6AF6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE16BB11710D68900F6AF6B /* main.m in Sources */,
+				EEE16BC21710DBB800F6AF6B /* NSEntityDescription+xmlElement.m in Sources */,
+				EEE16BC51710DC1500F6AF6B /* NSManagedObjectModel+xmlElement.m in Sources */,
+				EEE16BC81710E45700F6AF6B /* NSAttributeDescription+xmlElement.m in Sources */,
+				EEE16BCB1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m in Sources */,
+				EEE16BCE1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EEE16BB61710D68A00F6AF6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EEE16BB71710D68A00F6AF6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		EEE16BB91710D68A00F6AF6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "momdec/momdec-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EEE16BBA1710D68A00F6AF6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "momdec/momdec-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EEE16BA51710D68900F6AF6B /* Build configuration list for PBXProject "momdec" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEE16BB61710D68A00F6AF6B /* Debug */,
+				EEE16BB71710D68A00F6AF6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEE16BB81710D68A00F6AF6B /* Build configuration list for PBXNativeTarget "momdec" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEE16BB91710D68A00F6AF6B /* Debug */,
+				EEE16BBA1710D68A00F6AF6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EEE16BA21710D68900F6AF6B /* Project object */;
+}
