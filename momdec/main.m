@@ -42,7 +42,7 @@ int main(int argc, const char * argv[])
                 
                 NSXMLDocument *modelDocument = [model xmlDocument];
                 NSLog(@"Model XML document: %@", modelDocument);
-                NSData *modelXMLData = [modelDocument XMLDataWithOptions:NSXMLNodePrettyPrint|NSXMLDocumentIncludeContentTypeDeclaration];
+                NSData *modelXMLData = [modelDocument XMLDataWithOptions:NSXMLNodePrettyPrint|NSXMLNodeCompactEmptyElement|NSXMLDocumentIncludeContentTypeDeclaration];
                 [modelXMLData writeToFile:@"/tmp/test.xml" atomically:YES];
             } else {
                 NSLog(@"File not found: %@", argument);
