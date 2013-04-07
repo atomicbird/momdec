@@ -15,36 +15,30 @@
     return nil;
 }
 
-- (NSMutableDictionary *)commonXMLAttributes
+- (void)addCommonXMLDataToElement:(NSXMLElement *)element
 {
-    NSMutableDictionary *xmlAttributes = [NSMutableDictionary dictionary];
-    [xmlAttributes setObject:[self name] forKey:@"name"];
-    
+    [element addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:[self name]]];
     if ([self isOptional]) {
-        [xmlAttributes setObject:@"YES" forKey:@"optional"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:@"YES"]];
     }
     if ([self isTransient]) {
-        [xmlAttributes setObject:@"YES" forKey:@"transient"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"transient" stringValue:@"YES"]];
     }
     if ([self isIndexed]) {
-        [xmlAttributes setObject:@"YES" forKey:@"indexed"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"indexed" stringValue:@"YES"]];
     }
-    return xmlAttributes;
-}
-
-- (NSXMLElement *)userInfoElement
-{
+    
     NSDictionary *userInfo = [self userInfo];
-    NSXMLElement *userInfoElement = nil;
     if ([userInfo count] > 0) {
-        userInfoElement = [[NSXMLElement alloc] initWithName:@"userInfo"];
+        NSXMLElement *userInfoElement = [[NSXMLElement alloc] initWithName:@"userInfo"];
         for (NSString *userInfoKey in userInfo) {
             NSXMLElement *userInfoEntry = [[NSXMLElement alloc] initWithName:@"entry"];
             NSDictionary *userInfoAttributes = @{@"key" : userInfoKey, @"value" : [userInfo objectForKey:userInfoKey]};
             [userInfoEntry setAttributesWithDictionary:userInfoAttributes];
             [userInfoElement addChild:userInfoEntry];
         }
+        [element addChild:userInfoElement];
     }
-    return userInfoElement;
 }
+
 @end

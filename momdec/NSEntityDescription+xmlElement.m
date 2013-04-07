@@ -16,16 +16,14 @@
     NSXMLElement *element = [[NSXMLElement alloc] initWithName:@"entity"];
 
     // Set up XML attributes for self
-    NSMutableDictionary *xmlAttributes = [NSMutableDictionary dictionary];
-    [xmlAttributes setObject:[self name] forKey:@"name"];
-    [xmlAttributes setObject:[self managedObjectClassName] forKey:@"representedClassName"];
+    [element addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:[self name]]];
+    [element addAttribute:[NSXMLNode attributeWithName:@"representedClassName" stringValue:[self managedObjectClassName]]];
     if ([self superentity] != nil) {
-        [xmlAttributes setObject:[[self superentity] name] forKey:@"parentEntity"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"parentEntity" stringValue:[[self superentity] name]]];
     }
     if ([self isAbstract]) {
-        [xmlAttributes setObject:@"YES" forKey:@"isAbstract"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"isAbstract" stringValue:@"YES"]];
     }
-    [element setAttributesWithDictionary:xmlAttributes];
     
     // Add children for entity attributes.
     for (NSPropertyDescription *propertyDescription in [self properties]) {

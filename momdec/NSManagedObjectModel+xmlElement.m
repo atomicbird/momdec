@@ -18,7 +18,8 @@
     // Skipped attributes (for now?):
     // lastSavedToolsVersion
     // systemVersion
-    [element setAttributesWithDictionary:@{@"name": @"",
+    [element setAttributesWithDictionary:@{
+     @"name": @"",
      @"userDefinedModelVersionIdentifier": @"",
      @"type": @"com.apple.IDECoreDataModeler.DataModel",
      @"documentVersion": @"1.0",

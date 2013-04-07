@@ -11,7 +11,6 @@
 @interface NSPropertyDescription (xmlElement)
 
 - (NSXMLElement *)xmlElement;
-- (NSMutableDictionary *)commonXMLAttributes;
-- (NSXMLElement *)userInfoElement;
+- (void)addCommonXMLDataToElement:(NSXMLElement *)element;
 
 @end

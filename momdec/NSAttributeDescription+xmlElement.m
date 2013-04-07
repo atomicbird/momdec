@@ -14,8 +14,7 @@
 - (NSXMLElement *)xmlElement
 {
     NSXMLElement *element =[[NSXMLElement alloc] initWithName:@"attribute"];
-    
-    NSMutableDictionary *xmlAttributes = [super commonXMLAttributes];
+    [self addCommonXMLDataToElement:element];
     
     NSString *attributeTypeString = nil;
     switch ([self attributeType]) {
@@ -34,7 +33,7 @@
         default:                                                                    break;
     }
     if (attributeTypeString != nil) {
-        [xmlAttributes setObject:attributeTypeString forKey:@"attributeType"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"attributeType" stringValue:attributeTypeString]];
     }
     
     id defaultValue = [self defaultValue];
@@ -63,20 +62,13 @@
                 break;
         }
         if (defaultValueString != nil) {
-            [xmlAttributes setObject:defaultValueString forKey:@"defaultValueString"];
+            [element addAttribute:[NSXMLNode attributeWithName:@"defaultValueString" stringValue:defaultValueString]];
         }
     }
     
     if ([self allowsExternalBinaryDataStorage]) {
-        [xmlAttributes setObject:@"YES" forKey:@"allowsExternalBinaryDataStorage"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"allowsExternalBinaryDataStorage" stringValue:@"YES"]];
     }
-
-    NSXMLElement *userInfoElement = [self userInfoElement];
-    if (userInfoElement != nil) {
-        [element addChild:userInfoElement];
-    }
-
-    [element setAttributesWithDictionary:xmlAttributes];
 
     return element;
 }

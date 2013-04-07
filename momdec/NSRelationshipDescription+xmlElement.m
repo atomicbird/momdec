@@ -14,13 +14,13 @@
 - (NSXMLElement *)xmlElement
 {
     NSXMLElement *element = [[NSXMLElement alloc] initWithName:@"relationship"];
+    [self addCommonXMLDataToElement:element];
     
-    NSMutableDictionary *xmlAttributes = [super commonXMLAttributes];
     if ([self minCount]) {
-        [xmlAttributes setObject:[NSString stringWithFormat:@"%ld", (unsigned long)[self minCount]] forKey:@"minCount"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:[NSString stringWithFormat:@"%ld", (unsigned long)[self minCount]]]];
     }
     if ([self maxCount]) {
-        [xmlAttributes setObject:[NSString stringWithFormat:@"%ld", (unsigned long)[self maxCount]] forKey:@"maxCount"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"maxCount" stringValue:[NSString stringWithFormat:@"%ld", (unsigned long)[self maxCount]]]];
     }
 
     NSString *deleteRuleString = nil;
@@ -31,21 +31,15 @@
         default:                                                    break;
     }
     if (deleteRuleString != nil) {
-        [xmlAttributes setObject:deleteRuleString forKey:@"deletionRule"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"deletionRule" stringValue:deleteRuleString]];
     }
 
-    [xmlAttributes setObject:[[self destinationEntity] name] forKey:@"destinationEntity"];
+    [element addAttribute:[NSXMLNode attributeWithName:@"destinationEntity" stringValue:[[self destinationEntity] name]]];
     if ([self inverseRelationship] != nil) {
-        [xmlAttributes setObject:[[self inverseRelationship] name] forKey:@"inverseName"];
-        [xmlAttributes setObject:[[[self inverseRelationship] entity] name] forKey:@"inverseEntity"];
+        [element addAttribute:[NSXMLNode attributeWithName:@"inverseName" stringValue:[[self inverseRelationship] name]]];
+        [element addAttribute:[NSXMLNode attributeWithName:@"inverseEntity" stringValue:[[[self inverseRelationship] entity] name]]];
     }
     
-    NSXMLElement *userInfoElement = [self userInfoElement];
-    if (userInfoElement != nil) {
-        [element addChild:userInfoElement];
-    }
-
-    [element setAttributesWithDictionary:xmlAttributes];
     return element;
 }
 @end
