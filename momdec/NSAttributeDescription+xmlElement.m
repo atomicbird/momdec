@@ -43,7 +43,6 @@
             case NSInteger16AttributeType:
             case NSInteger32AttributeType:
             case NSInteger64AttributeType:
-            case NSDateAttributeType:
             case NSDecimalAttributeType:
                 defaultValueString = [NSString stringWithFormat:@"%ld", (long)[defaultValue integerValue]];
                 break;
@@ -58,6 +57,15 @@
                 break;
             case NSStringAttributeType:
                 defaultValueString = defaultValue;
+            case NSDateAttributeType:
+            {
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZZ"];
+                defaultValueString = [formatter stringFromDate:defaultValue];
+                NSTimeInterval defaultDateTimeInterval = [defaultValue timeIntervalSinceReferenceDate];
+                [element addAttribute:[NSXMLNode attributeWithName:@"defaultDateTimeInterval" stringValue:[NSString stringWithFormat:@"%.0f", defaultDateTimeInterval]]];
+                break;
+            }
             default:
                 break;
         }
