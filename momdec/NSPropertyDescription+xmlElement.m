@@ -29,13 +29,23 @@
     }
     
     NSDictionary *userInfo = [self userInfo];
+    NSString *syncable = [userInfo objectForKey:@"com.apple.syncservices.Syncable"];
+    if ((syncable == nil) || ((syncable != nil) && (![syncable isEqualToString:@"NO"]))) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"syncable" stringValue:@"YES"]];
+    }
+    
     if ([userInfo count] > 0) {
         NSXMLElement *userInfoElement = [[NSXMLElement alloc] initWithName:@"userInfo"];
         for (NSString *userInfoKey in userInfo) {
-            NSXMLElement *userInfoEntry = [[NSXMLElement alloc] initWithName:@"entry"];
-            NSDictionary *userInfoAttributes = @{@"key" : userInfoKey, @"value" : [userInfo objectForKey:userInfoKey]};
-            [userInfoEntry setAttributesWithDictionary:userInfoAttributes];
-            [userInfoElement addChild:userInfoEntry];
+            NSString *userInfoValue = [userInfo objectForKey:userInfoKey];
+            if ([userInfoKey isEqualToString:@"com.apple.syncservices.Syncable"]) {
+                // This key should never appear in uncompiled models.
+            } else {
+                NSXMLElement *userInfoEntry = [[NSXMLElement alloc] initWithName:@"entry"];
+                NSDictionary *userInfoAttributes = @{@"key" : userInfoKey, @"value" : userInfoValue};
+                [userInfoEntry setAttributesWithDictionary:userInfoAttributes];
+                [userInfoElement addChild:userInfoEntry];
+            }
         }
         [element addChild:userInfoElement];
     }
