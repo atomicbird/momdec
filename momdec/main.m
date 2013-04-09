@@ -37,8 +37,6 @@ int main(int argc, const char * argv[])
                 @finally {
                     
                 }
-                NSXMLElement *modelElement = [model xmlElement];
-                NSLog(@"model XML element: %@", modelElement);
                 
                 NSXMLDocument *modelDocument = [model xmlDocument];
                 NSLog(@"Model XML document: %@", modelDocument);
