@@ -31,6 +31,9 @@
         NSXMLElement *entityElement = [entityDescription xmlElement];
         [element addChild:entityElement];
     }
+    NSXMLElement *editorLayoutNode = [[NSXMLElement alloc] initWithName:@"elements"];
+    [element addChild:editorLayoutNode];
+    
     return element;
 }
 
