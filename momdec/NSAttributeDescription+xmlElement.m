@@ -57,6 +57,7 @@
                 break;
             case NSStringAttributeType:
                 defaultValueString = defaultValue;
+                break;
             case NSDateAttributeType:
             {
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
