@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'momdecTests' target in the 'momdecTests' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
