@@ -54,7 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EE2760C717121F7C0023821E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		EE2760C717121F7C0023821E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		EE7EC7931714BB6D00A1901C /* momdecTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = momdecTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7EC7941714BB6D00A1901C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		EE7EC7961714BB6D00A1901C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -67,6 +67,7 @@
 		EE7EC7A31714BB6D00A1901C /* momdecTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = momdecTests.m; sourceTree = "<group>"; };
 		EE7EC7A51714BB6D00A1901C /* momdecTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "momdecTests-Prefix.pch"; sourceTree = "<group>"; };
 		EE7EC7AC1714BC0700A1901C /* momdecTests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = momdecTests.xcdatamodel; sourceTree = "<group>"; };
+		EE7EC7BF17162E8600A1901C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		EEE16BAA1710D68900F6AF6B /* momdec */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = momdec; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEE16BAD1710D68900F6AF6B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EEE16BB01710D68900F6AF6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -187,6 +188,7 @@
 				EEE16BB41710D68A00F6AF6B /* momdec.1 */,
 				EEE16BB21710D68A00F6AF6B /* Supporting Files */,
 				EE2760C717121F7C0023821E /* README.md */,
+				EE7EC7BF17162E8600A1901C /* LICENSE */,
 			);
 			path = momdec;
 			sourceTree = "<group>";
@@ -447,6 +449,7 @@
 				EE7EC7A71714BB6D00A1901C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEE16BA51710D68900F6AF6B /* Build configuration list for PBXProject "momdec" */ = {
 			isa = XCConfigurationList;
