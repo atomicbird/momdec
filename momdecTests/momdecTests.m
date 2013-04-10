@@ -26,46 +26,41 @@
     [super tearDown];
 }
 
-- (void)_removeElementsNodeFromDocument:(NSXMLDocument *)modelDocument
-{
-    int elementsIndex = -1;
-    for (elementsIndex=0; elementsIndex<[[modelDocument rootElement] childCount]; elementsIndex++) {
-        // The "elements" node contains graphical editor positioning info, which is not included in the compiled model.
-        // Since these can't possibly match, they're removed before comparing.
-        NSXMLNode *currentChild = [[modelDocument rootElement] childAtIndex:elementsIndex];
-        if ([[currentChild name] isEqualToString:@"elements"]) {
-            break;
-        }
-    }
-    if (elementsIndex >= 0) {
-        [[modelDocument rootElement] removeChildAtIndex:elementsIndex];
-    }
-}
-
 - (void)testDecompile
 {
     NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
 
-    // Get the original uncompiled model
-    NSURL *uncompiledModelURL = [[selfBundle resourceURL] URLByAppendingPathComponent:@"momdecTests.xcdatamodeld/momdecTests.xcdatamodel/contents"];
-    NSXMLDocument *uncompiledModelDocument = [[NSXMLDocument alloc] initWithContentsOfURL:uncompiledModelURL options:0 error:nil];
-    // Clean up some hopefully-irrelevant details not included in the compiled model.
-    [self _removeElementsNodeFromDocument:uncompiledModelDocument];
-    [[uncompiledModelDocument rootElement] removeAttributeForName:@"lastSavedToolsVersion"];
-    [[uncompiledModelDocument rootElement] removeAttributeForName:@"systemVersion"];
-    
     // Get the compiled model and decompile it.
     NSURL *momURL = [selfBundle URLForResource:@"momdecTests" withExtension:@"momd"];
     NSManagedObjectModel *compiledModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
     NSXMLDocument *decompiledModelDocument = [compiledModel xmlDocument];
-    [self _removeElementsNodeFromDocument:decompiledModelDocument];
     
-    // Compare the two non-compiled versions
-    NSLog(@"uncompiled: %@", uncompiledModelDocument);
-    NSLog(@"decompiled: %@", decompiledModelDocument);
+    // Write the decompiled model to a temprary file
+    NSString *momdecTestDir = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"momdecTests-%d", getpid()]];
+    NSString *decompiledModelContainerPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.xcdatamodel"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:decompiledModelContainerPath withIntermediateDirectories:YES attributes:nil error:nil];
+    NSData *decompiledModelXMLData = [decompiledModelDocument XMLDataWithOptions:NSXMLNodePrettyPrint|NSXMLNodeCompactEmptyElement|NSXMLDocumentIncludeContentTypeDeclaration];
+    NSString *decompiledModelPath = [decompiledModelContainerPath stringByAppendingPathComponent:@"contents"];
+    [decompiledModelXMLData writeToFile:decompiledModelPath atomically:YES];
+
+    // Compile the temporary file copy
+    NSString *recompiledModelPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.momd"];
+    NSTask *compileTask = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/xcrun" arguments:@[@"momc", decompiledModelContainerPath, recompiledModelPath]];
+    [compileTask waitUntilExit];
     
-    if (![decompiledModelDocument isEqual:uncompiledModelDocument]) {
-        STFail(@"Decompiled document does not match");
+    // Load the recompiled model
+    NSManagedObjectModel *recompiledModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:recompiledModelPath]];
+    
+    // Compare the original compiled model with the recompiled version.
+    NSDictionary *originalEntities = [compiledModel entitiesByName];
+    NSDictionary *recompiledEntities = [recompiledModel entitiesByName];
+    
+    for (NSEntityDescription *originalEntityName in originalEntities) {
+        NSEntityDescription *originalEntity = [originalEntities objectForKey:originalEntityName];
+        NSEntityDescription *recompiledEntity = [recompiledEntities objectForKey:originalEntityName];
+        if (![originalEntity isEqual:recompiledEntity]) {
+            STFail(@"Entities do not match: %@", originalEntityName);
+        }
     }
 }
 
