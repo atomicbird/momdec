@@ -43,17 +43,19 @@
             case NSInteger16AttributeType:
             case NSInteger32AttributeType:
             case NSInteger64AttributeType:
-            case NSDecimalAttributeType:
                 defaultValueString = [NSString stringWithFormat:@"%ld", (long)[defaultValue integerValue]];
+                break;
+            case NSDecimalAttributeType:
+                defaultValueString = [defaultValue descriptionWithLocale:nil];
                 break;
             case NSBooleanAttributeType:
                 defaultValueString = [defaultValue boolValue] ? @"YES" : @"NO";
                 break;
             case NSDoubleAttributeType:
-                defaultValueString = [NSString stringWithFormat:@"%f", [defaultValue doubleValue]];
+                defaultValueString = [NSString stringWithFormat:@"%g", [defaultValue doubleValue]];
                 break;
             case NSFloatAttributeType:
-                defaultValueString = [NSString stringWithFormat:@"%f", [defaultValue floatValue]];
+                defaultValueString = [NSString stringWithFormat:@"%g", [defaultValue floatValue]];
                 break;
             case NSStringAttributeType:
                 defaultValueString = defaultValue;
@@ -75,6 +77,9 @@
         }
     }
     
+    if ([self valueTransformerName] != nil) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"valueTransformerName" stringValue:[self valueTransformerName]]];
+    }
     if ([self allowsExternalBinaryDataStorage]) {
         [element addAttribute:[NSXMLNode attributeWithName:@"allowsExternalBinaryDataStorage" stringValue:@"YES"]];
     }
