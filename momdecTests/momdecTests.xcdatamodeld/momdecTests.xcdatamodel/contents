@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Entity" syncable="YES">
-        <attribute name="foo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="binaryAttribute" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="booleanAttribute" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="dateAttribute" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="decimalAttribute" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="doubleAttribute" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="floatAttribute" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="int16Attribute" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="int32Attribute" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="int64Attribute" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="stringAttribute" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transformableAttribute" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Entity" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="Entity" positionX="160" positionY="192" width="128" height="210"/>
     </elements>
 </model>
