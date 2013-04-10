@@ -13,4 +13,7 @@
 - (NSXMLElement *)xmlElement;
 
 - (NSXMLDocument *)xmlDocument;
+
++ (NSString *)decompileModelAtPath:(NSString *)momPath;
+
 @end

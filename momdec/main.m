@@ -10,6 +10,13 @@
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectModel+xmlElement.h"
 
+/*
+ Source Result
+ *.mom  *.xcdatamodel
+ *.momd *.xcdatamodeld
+ *.app  Either of the above depending what the bundle contains
+ */
+
 int main(int argc, const char * argv[])
 {
 
@@ -17,36 +24,11 @@ int main(int argc, const char * argv[])
 
         NSArray *args = [[NSProcessInfo processInfo] arguments];
         
-        for (int i=1; i<[args count]; i++) {
-            NSString *argument = [args objectAtIndex:i];
-            NSLog(@"arg: %@", argument);
-            
-            NSURL *fileUrl = [NSURL fileURLWithPath:argument];
-            NSLog(@"URL: %@", [fileUrl absoluteString]);
-            
-            NSManagedObjectModel *model = nil;
-            
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[fileUrl path]]) {
-                @try {
-                    model = [[NSManagedObjectModel alloc] initWithContentsOfURL:fileUrl];
-                    NSLog(@"Opened %@", argument);
-                }
-                @catch (NSException *exception) {
-                    NSLog(@"%@ is not a compiled managed object model", argument);
-                }
-                @finally {
-                    
-                }
-                
-                NSXMLDocument *modelDocument = [model xmlDocument];
-                NSLog(@"Model XML document: %@", modelDocument);
-                NSData *modelXMLData = [modelDocument XMLDataWithOptions:NSXMLNodePrettyPrint|NSXMLNodeCompactEmptyElement|NSXMLDocumentIncludeContentTypeDeclaration];
-                [modelXMLData writeToFile:@"/tmp/test.xml" atomically:YES];
-            } else {
-                NSLog(@"File not found: %@", argument);
-            }
+        if ([args count] > 1) {
+            NSString *filename = [args objectAtIndex:1];
+            [NSManagedObjectModel decompileModelAtPath:filename];
+            return 0;
         }
-        
     }
     return 0;
 }
