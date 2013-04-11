@@ -27,15 +27,7 @@
     if ([self isAbstract]) {
         [element addAttribute:[NSXMLNode attributeWithName:@"isAbstract" stringValue:@"YES"]];
     }
-    // There's some funky shit related to the com.apple.syncservices.Syncable userInfo key.
-    // If com.apple.syncservices.Syncable was not present in Xcode:
-    //      There's no sign of it here. Write syncable=YES as an attribute.
-    // If com.apple.syncservices.Syncable was present in Xcode and equal to NO:
-    //      It will be present in self's userInfo. Don't write it to userInfo, but don't write syncable=YES either. DO write an empty userInfo if needed.
-    // If com.apple.syncservices.Syncable was present in Xcode and equal to YES:
-    //      There's no sign of it here. The original uncompiled model will have contained an empty <userInfo> element, but
-    //      it's impossible to know that we should add one here. Write syncable=YES as an attribute.
-    //      THIS MEANS UNIT TESTS WILL FAIL, but there's nothing that can be done about it because the data doesn't exist.
+
     NSDictionary *userInfo = [self userInfo];
     NSString *syncable = [userInfo objectForKey:@"com.apple.syncservices.Syncable"];
     if ((syncable == nil) || ((syncable != nil) && (![syncable isEqualToString:@"NO"]))) {
@@ -58,6 +50,12 @@
         [element addChild:userInfoElement];
     }
 
+    if ([self versionHashModifier] != nil) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"versionHashModifier" stringValue:[self versionHashModifier]]];
+    }
+    if ([self renamingIdentifier] != nil) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"elementID" stringValue:[self renamingIdentifier]]];
+    }
     // Add children for entity attributes.
     for (NSPropertyDescription *propertyDescription in [self properties]) {
         [element addChild:[propertyDescription xmlElement]];
