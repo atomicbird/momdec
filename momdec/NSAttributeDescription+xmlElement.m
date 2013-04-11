@@ -83,6 +83,12 @@
     if ([self allowsExternalBinaryDataStorage]) {
         [element addAttribute:[NSXMLNode attributeWithName:@"allowsExternalBinaryDataStorage" stringValue:@"YES"]];
     }
+    if ([self isIndexedBySpotlight]) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"spotlightIndexingEnabled" stringValue:@"YES"]];
+    }
+    if ([self isStoredInExternalRecord]) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"storedInTruthFile" stringValue:@"YES"]];
+    }
 
     return element;
 }
