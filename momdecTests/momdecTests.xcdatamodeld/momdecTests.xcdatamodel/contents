@@ -17,6 +17,16 @@
         <fetchedProperty name="yesBooleans" optional="YES" syncable="YES">
             <fetchRequest name="fetchedPropertyFetchRequest" entity="Entity" predicateString="booleanAttribute = YES"/>
         </fetchedProperty>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="booleanAttribute"/>
+                <index value="dateAttribute"/>
+            </compoundIndex>
+            <compoundIndex>
+                <index value="decimalAttribute"/>
+                <index value="doubleAttribute"/>
+            </compoundIndex>
+        </compoundIndexes>
         <userInfo>
             <entry key="someKey" value="randomValue"/>
         </userInfo>

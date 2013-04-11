@@ -56,6 +56,21 @@
     if ([self renamingIdentifier] != nil) {
         [element addAttribute:[NSXMLNode attributeWithName:@"elementID" stringValue:[self renamingIdentifier]]];
     }
+    if ([[self compoundIndexes] count] > 0) {
+        NSXMLElement *compoundIndexesElement = [[NSXMLElement alloc] initWithName:@"compoundIndexes"];
+        [element addChild:compoundIndexesElement];
+        for (NSArray *indexSet in [self compoundIndexes]) {
+            NSArray *indexSetNames = [indexSet valueForKey:@"name"];
+            NSXMLElement *compoundIndexElement = [[NSXMLElement alloc] initWithName:@"compoundIndex"];
+            [compoundIndexesElement addChild:compoundIndexElement];
+            for (NSString *indexName in indexSetNames) {
+                NSXMLElement *indexElement = [[NSXMLElement alloc] initWithName:@"index"];
+                [compoundIndexElement addChild:indexElement];
+                [indexElement addAttribute:[NSXMLNode attributeWithName:@"value" stringValue:indexName]];
+            }
+        }
+    }
+    
     // Add children for entity attributes.
     for (NSPropertyDescription *propertyDescription in [self properties]) {
         [element addChild:[propertyDescription xmlElement]];
