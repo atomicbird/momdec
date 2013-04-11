@@ -124,9 +124,11 @@
                 // Process version info for the momd
                 NSDictionary *versionInfo = [NSDictionary dictionaryWithContentsOfFile:fullPath];
                 NSString *currentVersionName = [versionInfo objectForKey:@"NSManagedObjectModel_CurrentVersionName"];
-                NSString *currentModelName = [currentVersionName stringByAppendingPathExtension:@"xcdatamodel"];
-                NSDictionary *versionDictionary = @{@"_XCCurrentVersionName": currentModelName};
-                [versionDictionary writeToFile:@".xccurrentversion" atomically:YES];
+                if (currentVersionName != nil) {
+                    NSString *currentModelName = [currentVersionName stringByAppendingPathExtension:@"xcdatamodel"];
+                    NSDictionary *versionDictionary = @{@"_XCCurrentVersionName": currentModelName};
+                    [versionDictionary writeToFile:@".xccurrentversion" atomically:YES];
+                }
             }
         }
     }
