@@ -49,6 +49,13 @@
         }
         [element addChild:userInfoElement];
     }
+
+    if ([self versionHashModifier] != nil) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"versionHashModifier" stringValue:[self versionHashModifier]]];
+    }
+    if ([self renamingIdentifier] != nil) {
+        [element addAttribute:[NSXMLNode attributeWithName:@"elementID" stringValue:[self renamingIdentifier]]];
+    }
 }
 
 @end
