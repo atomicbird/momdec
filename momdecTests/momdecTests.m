@@ -30,19 +30,15 @@
 {
     NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
 
-    // Get the compiled model and decompile it.
+    // Get the compiled model
     NSURL *momURL = [selfBundle URLForResource:@"momdecTests" withExtension:@"momd"];
     NSManagedObjectModel *compiledModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
-    NSXMLDocument *decompiledModelDocument = [compiledModel xmlDocument];
     
-    // Write the decompiled model to a temprary file
+    // Decompile the model into a temporary directory
     NSString *momdecTestDir = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"momdecTests-%d", getpid()]];
-    NSString *decompiledModelContainerPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.xcdatamodel"];
-    [[NSFileManager defaultManager] createDirectoryAtPath:decompiledModelContainerPath withIntermediateDirectories:YES attributes:nil error:nil];
-    NSData *decompiledModelXMLData = [decompiledModelDocument XMLDataWithOptions:NSXMLNodePrettyPrint|NSXMLNodeCompactEmptyElement|NSXMLDocumentIncludeContentTypeDeclaration];
-    NSString *decompiledModelPath = [decompiledModelContainerPath stringByAppendingPathComponent:@"contents"];
-    [decompiledModelXMLData writeToFile:decompiledModelPath atomically:YES];
-
+    [[NSFileManager defaultManager] createDirectoryAtPath:momdecTestDir withIntermediateDirectories:YES attributes:0 error:nil];
+    NSString *decompiledModelContainerPath = [NSManagedObjectModel decompileModelAtPath:[momURL path] inDirectory:momdecTestDir];
+    
     // Compile the temporary file copy
     NSString *recompiledModelPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.momd"];
     NSTask *compileTask = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/xcrun" arguments:@[@"momc", decompiledModelContainerPath, recompiledModelPath]];

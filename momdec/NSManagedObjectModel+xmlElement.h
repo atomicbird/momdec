@@ -14,6 +14,6 @@
 
 - (NSXMLDocument *)xmlDocument;
 
-+ (NSString *)decompileModelAtPath:(NSString *)momPath;
++ (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath;
 
 @end

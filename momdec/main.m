@@ -14,7 +14,6 @@
  Source Result
  *.mom  *.xcdatamodel
  *.momd *.xcdatamodeld
- *.app  Either of the above depending what the bundle contains
  */
 
 int main(int argc, const char * argv[])
@@ -26,8 +25,10 @@ int main(int argc, const char * argv[])
         
         if ([args count] > 1) {
             NSString *filename = [args objectAtIndex:1];
-            [NSManagedObjectModel decompileModelAtPath:filename];
+            [NSManagedObjectModel decompileModelAtPath:filename inDirectory:@"."];
             return 0;
+        } else {
+            fprintf(stderr, "Usage: momdec [foo.mom|foo.momd]");
         }
     }
     return 0;
