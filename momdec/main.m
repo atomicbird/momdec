@@ -25,10 +25,16 @@ int main(int argc, const char * argv[])
         
         if ([args count] > 1) {
             NSString *filename = [args objectAtIndex:1];
-            [NSManagedObjectModel decompileModelAtPath:filename inDirectory:@"."];
+            NSString *directoryPath;
+            if ([args count] > 2) {
+                directoryPath = [args objectAtIndex:2];
+            } else {
+                directoryPath = @".";
+            }
+            [NSManagedObjectModel decompileModelAtPath:filename inDirectory:directoryPath];
             return 0;
         } else {
-            fprintf(stderr, "Usage: momdec [foo.mom|foo.momd]");
+            fprintf(stderr, "Usage: momdec (foo.mom|foo.momd) [output directory]");
         }
     }
     return 0;
