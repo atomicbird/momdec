@@ -54,13 +54,23 @@
     // Compare the original compiled model with the recompiled version.
     NSDictionary *originalEntities = [compiledModel entitiesByName];
     NSDictionary *recompiledEntities = [recompiledModel entitiesByName];
+    for (NSString *entityName in originalEntities) {
+        NSEntityDescription *originalEntity = [originalEntities objectForKey:entityName];
+        NSEntityDescription *recompiledEntity = [recompiledEntities objectForKey:entityName];
+        STAssertEqualObjects(originalEntity, recompiledEntity, @"Entities do not match: %@", entityName);
+    }
+
+    NSDictionary *originalFetchRequests = [compiledModel fetchRequestTemplatesByName];
+    NSDictionary *recompiledFetchRequests = [recompiledModel fetchRequestTemplatesByName];
+    for (NSString *fetchRequestName in originalFetchRequests) {
+        NSFetchRequest *originalFetchRequest = [originalFetchRequests objectForKey:fetchRequestName];
+        NSFetchRequest *recompiledFetchRequest = [recompiledFetchRequests objectForKey:fetchRequestName];
+        STAssertEqualObjects(originalFetchRequest, recompiledFetchRequest, @"Fetch requests do not match: %@", fetchRequestName);
+    }
     
-    for (NSEntityDescription *originalEntityName in originalEntities) {
-        NSEntityDescription *originalEntity = [originalEntities objectForKey:originalEntityName];
-        NSEntityDescription *recompiledEntity = [recompiledEntities objectForKey:originalEntityName];
-        if (![originalEntity isEqual:recompiledEntity]) {
-            STFail(@"Entities do not match: %@", originalEntityName);
-        }
+    NSArray *originalConfigurations = [compiledModel configurations];
+    for (NSString *configurationName in originalConfigurations) {
+        STAssertEqualObjects([compiledModel entitiesForConfiguration:configurationName], [recompiledModel entitiesForConfiguration:configurationName], @"Configuration does not match: %@", configurationName);
     }
 }
 

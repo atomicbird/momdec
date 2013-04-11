@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE22DD4117166355007FE629 /* NSFetchRequest+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EE22DD4017166355007FE629 /* NSFetchRequest+xmlElement.m */; };
+		EE22DD4217166355007FE629 /* NSFetchRequest+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EE22DD4017166355007FE629 /* NSFetchRequest+xmlElement.m */; };
 		EE7EC7951714BB6D00A1901C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE7EC7941714BB6D00A1901C /* SenTestingKit.framework */; };
 		EE7EC7971714BB6D00A1901C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE7EC7961714BB6D00A1901C /* Cocoa.framework */; };
 		EE7EC7A11714BB6D00A1901C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE7EC79F1714BB6D00A1901C /* InfoPlist.strings */; };
@@ -56,6 +58,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EE22DD3F17166355007FE629 /* NSFetchRequest+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+xmlElement.h"; sourceTree = "<group>"; };
+		EE22DD4017166355007FE629 /* NSFetchRequest+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+xmlElement.m"; sourceTree = "<group>"; };
 		EE2760C717121F7C0023821E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		EE7EC7931714BB6D00A1901C /* momdecTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = momdecTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7EC7941714BB6D00A1901C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -191,6 +195,8 @@
 				EEE16BCD1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m */,
 				EE7EC7C01716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.h */,
 				EE7EC7C11716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m */,
+				EE22DD3F17166355007FE629 /* NSFetchRequest+xmlElement.h */,
+				EE22DD4017166355007FE629 /* NSFetchRequest+xmlElement.m */,
 				EEE16BB41710D68A00F6AF6B /* momdec.1 */,
 				EEE16BB21710D68A00F6AF6B /* Supporting Files */,
 				EE2760C717121F7C0023821E /* README.md */,
@@ -313,6 +319,7 @@
 				EE7EC7A41714BB6D00A1901C /* momdecTests.m in Sources */,
 				EE7EC7AD1714BC0700A1901C /* momdecTests.xcdatamodeld in Sources */,
 				EE7EC7C3171635E800A1901C /* NSFetchedPropertyDescription+xmlElement.m in Sources */,
+				EE22DD4217166355007FE629 /* NSFetchRequest+xmlElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +334,7 @@
 				EEE16BCB1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m in Sources */,
 				EEE16BCE1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m in Sources */,
 				EE7EC7C21716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m in Sources */,
+				EE22DD4117166355007FE629 /* NSFetchRequest+xmlElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

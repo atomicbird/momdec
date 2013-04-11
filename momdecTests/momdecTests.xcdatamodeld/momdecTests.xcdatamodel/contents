@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="AbstractEntity" syncable="YES"/>
+    <entity name="AbstractEntity" isAbstract="YES" syncable="YES"/>
     <entity name="Entity" representedClassName="EntityClass" parentEntity="AbstractEntity" elementID="myRenamingIdentifier" versionHashModifier="myVersionHashModifier" syncable="YES">
-        <attribute name="binaryAttribute" optional="YES" attributeType="Binary" spotlightIndexingEnabled="YES" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="binaryAttribute" optional="YES" attributeType="Binary" spotlightIndexingEnabled="YES" storedInTruthFile="YES" syncable="YES">
+            <userInfo>
+                <entry key="binaryBar" value="NO"/>
+                <entry key="binaryBaz" value="MAYBE"/>
+                <entry key="binaryFoo" value="YES"/>
+            </userInfo>
+        </attribute>
         <attribute name="booleanAttribute" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="dateAttribute" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="decimalAttribute" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -34,9 +40,17 @@
     <entity name="OtherEntity" syncable="YES">
         <relationship name="mainEntity" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="otherEntities" inverseEntity="Entity" syncable="YES"/>
     </entity>
+    <entity name="UnrelatedEntity" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <fetchRequest name="FetchRequest" entity="Entity" predicateString="booleanAttribute == 1 AND floatAttribute > 5"/>
+    <configuration name="UnrelatedConfiguration">
+        <memberEntity name="UnrelatedEntity"/>
+    </configuration>
     <elements>
         <element name="Entity" positionX="160" positionY="192" width="128" height="254"/>
         <element name="OtherEntity" positionX="160" positionY="192" width="128" height="60"/>
         <element name="AbstractEntity" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="UnrelatedEntity" positionX="160" positionY="192" width="128" height="60"/>
     </elements>
 </model>

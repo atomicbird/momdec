@@ -8,6 +8,7 @@
 
 #import "NSManagedObjectModel+xmlElement.h"
 #import "NSEntityDescription+xmlElement.h"
+#import "NSFetchRequest+xmlElement.h"
 
 @implementation NSManagedObjectModel (xmlElement)
 
@@ -27,10 +28,34 @@
      @"macOSVersion": @"Automatic",
      @"iOSVersion" : @"Automatic"
      }];
+    
+    // Entities
     for (NSEntityDescription *entityDescription in [self entities]) {
         NSXMLElement *entityElement = [entityDescription xmlElement];
         [element addChild:entityElement];
     }
+    // Fetch request templates
+    NSDictionary *fetchRequestTemplatesByName = [self fetchRequestTemplatesByName];
+    for (NSString *fetchRequestName in fetchRequestTemplatesByName) {
+        NSFetchRequest *fetchRequest = [fetchRequestTemplatesByName objectForKey:fetchRequestName];
+        NSXMLElement *fetchRequestElement = [fetchRequest xmlElement];
+        [fetchRequestElement addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:fetchRequestName]];
+        [element addChild:fetchRequestElement];
+    }
+    // Configurations
+    for (NSString *configurationName in [self configurations]) {
+        NSXMLElement *configurationElement = [[NSXMLElement alloc] initWithName:@"configuration"];
+        [element addChild:configurationElement];
+        [configurationElement addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:configurationName]];
+        NSArray *entitiesForConfiguration = [self entitiesForConfiguration:configurationName];
+        for (NSEntityDescription *entity in entitiesForConfiguration) {
+            NSXMLElement *entityElement = [[NSXMLElement alloc] initWithName:@"memberEntity"];
+            [configurationElement addChild:entityElement];
+            [entityElement addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:[entity name]]];
+        }
+    }
+    
+    // Empty "elements" (used to store locations for graphical model editor)
     NSXMLElement *editorLayoutNode = [[NSXMLElement alloc] initWithName:@"elements"];
     [element addChild:editorLayoutNode];
     
