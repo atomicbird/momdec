@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Entity" syncable="YES">
-        <attribute name="binaryAttribute" optional="YES" attributeType="Binary" syncable="YES"/>
+    <entity name="AbstractEntity" syncable="YES"/>
+    <entity name="Entity" representedClassName="EntityClass" parentEntity="AbstractEntity" elementID="myRenamingIdentifier" versionHashModifier="myVersionHashModifier" syncable="YES">
+        <attribute name="binaryAttribute" optional="YES" attributeType="Binary" spotlightIndexingEnabled="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="booleanAttribute" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="dateAttribute" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="decimalAttribute" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
@@ -11,9 +12,21 @@
         <attribute name="int32Attribute" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="int64Attribute" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="stringAttribute" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="transformableAttribute" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
+        <attribute name="transformableAttribute" optional="YES" attributeType="Transformable" valueTransformerName="myValueTransformer" syncable="YES"/>
+        <relationship name="otherEntities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OtherEntity" inverseName="mainEntity" inverseEntity="OtherEntity" syncable="YES"/>
+        <fetchedProperty name="yesBooleans" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Entity" predicateString="booleanAttribute = YES"/>
+        </fetchedProperty>
+        <userInfo>
+            <entry key="someKey" value="randomValue"/>
+        </userInfo>
+    </entity>
+    <entity name="OtherEntity" syncable="YES">
+        <relationship name="mainEntity" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="otherEntities" inverseEntity="Entity" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Entity" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="Entity" positionX="160" positionY="192" width="128" height="254"/>
+        <element name="OtherEntity" positionX="160" positionY="192" width="128" height="60"/>
+        <element name="AbstractEntity" positionX="160" positionY="192" width="128" height="45"/>
     </elements>
 </model>
