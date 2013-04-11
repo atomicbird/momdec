@@ -19,6 +19,8 @@
 		EE7EC7B61714BC6200A1901C /* NSAttributeDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BC71710E45700F6AF6B /* NSAttributeDescription+xmlElement.m */; };
 		EE7EC7B81714BC6200A1901C /* NSRelationshipDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BCA1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m */; };
 		EE7EC7BA1714BC6200A1901C /* NSPropertyDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BCD1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m */; };
+		EE7EC7C21716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7EC7C11716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m */; };
+		EE7EC7C3171635E800A1901C /* NSFetchedPropertyDescription+xmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7EC7C11716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m */; };
 		EEE16BAE1710D68900F6AF6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE16BAD1710D68900F6AF6B /* Foundation.framework */; };
 		EEE16BB11710D68900F6AF6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE16BB01710D68900F6AF6B /* main.m */; };
 		EEE16BB51710D68A00F6AF6B /* momdec.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EEE16BB41710D68A00F6AF6B /* momdec.1 */; };
@@ -68,6 +70,8 @@
 		EE7EC7A51714BB6D00A1901C /* momdecTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "momdecTests-Prefix.pch"; sourceTree = "<group>"; };
 		EE7EC7AC1714BC0700A1901C /* momdecTests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = momdecTests.xcdatamodel; sourceTree = "<group>"; };
 		EE7EC7BF17162E8600A1901C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		EE7EC7C01716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchedPropertyDescription+xmlElement.h"; sourceTree = "<group>"; };
+		EE7EC7C11716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchedPropertyDescription+xmlElement.m"; sourceTree = "<group>"; };
 		EEE16BAA1710D68900F6AF6B /* momdec */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = momdec; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEE16BAD1710D68900F6AF6B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EEE16BB01710D68900F6AF6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 				EEE16BCA1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m */,
 				EEE16BCC1710E55800F6AF6B /* NSPropertyDescription+xmlElement.h */,
 				EEE16BCD1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m */,
+				EE7EC7C01716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.h */,
+				EE7EC7C11716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m */,
 				EEE16BB41710D68A00F6AF6B /* momdec.1 */,
 				EEE16BB21710D68A00F6AF6B /* Supporting Files */,
 				EE2760C717121F7C0023821E /* README.md */,
@@ -306,6 +312,7 @@
 				EE7EC7BA1714BC6200A1901C /* NSPropertyDescription+xmlElement.m in Sources */,
 				EE7EC7A41714BB6D00A1901C /* momdecTests.m in Sources */,
 				EE7EC7AD1714BC0700A1901C /* momdecTests.xcdatamodeld in Sources */,
+				EE7EC7C3171635E800A1901C /* NSFetchedPropertyDescription+xmlElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +326,7 @@
 				EEE16BC81710E45700F6AF6B /* NSAttributeDescription+xmlElement.m in Sources */,
 				EEE16BCB1710E50B00F6AF6B /* NSRelationshipDescription+xmlElement.m in Sources */,
 				EEE16BCE1710E55800F6AF6B /* NSPropertyDescription+xmlElement.m in Sources */,
+				EE7EC7C21716358A00A1901C /* NSFetchedPropertyDescription+xmlElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
