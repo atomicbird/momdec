@@ -13,8 +13,8 @@
 
 - (NSXMLElement *)xmlElement
 {
-    NSXMLElement *element =[[NSXMLElement alloc] initWithName:@"attribute"];
-    [self addCommonXMLDataToElement:element];
+    NSXMLElement *element = [super xmlElement];
+    [element setName:@"attribute"];
     
     NSString *attributeTypeString = nil;
     switch ([self attributeType]) {

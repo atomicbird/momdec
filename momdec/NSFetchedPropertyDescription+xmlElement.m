@@ -13,8 +13,8 @@
 
 - (NSXMLElement *)xmlElement
 {
-    NSXMLElement *element = [[NSXMLElement alloc] initWithName:@"fetchedProperty"];
-    [self addCommonXMLDataToElement:element];
+    NSXMLElement *element = [super xmlElement];
+    [element setName:@"fetchedProperty"];
     
     NSXMLElement *fetchRequestElement = [[NSXMLElement alloc] initWithName:@"fetchRequest"];
     NSString *predicateString = [[[self fetchRequest] predicate] predicateFormat];

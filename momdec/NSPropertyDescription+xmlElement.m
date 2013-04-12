@@ -12,11 +12,12 @@
 
 - (NSXMLElement *)xmlElement
 {
-    return nil;
-}
-
-- (void)addCommonXMLDataToElement:(NSXMLElement *)element
-{
+    if ([self isMemberOfClass:[NSPropertyDescription class]]) {
+        NSException *exception = [NSException exceptionWithName:NSGenericException reason:@"NSPropertyDescription has no XML element" userInfo:nil];
+        [exception raise];
+        return nil;
+    }
+    NSXMLElement *element = [NSXMLElement elementWithName:@""];
     [element addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:[self name]]];
     if ([self isOptional]) {
         [element addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:@"YES"]];
@@ -49,13 +50,14 @@
         }
         [element addChild:userInfoElement];
     }
-
+    
     if ([self versionHashModifier] != nil) {
         [element addAttribute:[NSXMLNode attributeWithName:@"versionHashModifier" stringValue:[self versionHashModifier]]];
     }
     if ([self renamingIdentifier] != nil) {
         [element addAttribute:[NSXMLNode attributeWithName:@"elementID" stringValue:[self renamingIdentifier]]];
     }
+    return element;
 }
 
 @end

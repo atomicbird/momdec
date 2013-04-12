@@ -11,6 +11,5 @@
 @interface NSPropertyDescription (xmlElement)
 
 - (NSXMLElement *)xmlElement;
-- (void)addCommonXMLDataToElement:(NSXMLElement *)element;
 
 @end

@@ -9,6 +9,7 @@
 #import "momdecTests.h"
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectModel+xmlElement.h"
+#import "NSPropertyDescription+xmlElement.h"
 
 @implementation momdecTests
 
@@ -67,6 +68,21 @@
     NSArray *originalConfigurations = [compiledModel configurations];
     for (NSString *configurationName in originalConfigurations) {
         STAssertEqualObjects([compiledModel entitiesForConfiguration:configurationName], [recompiledModel entitiesForConfiguration:configurationName], @"Configuration does not match: %@", configurationName);
+    }
+}
+
+- (void)testPropertyDescriptionException
+{
+    NSPropertyDescription *testProperty = [[NSPropertyDescription alloc] init];
+    BOOL exceptionThrown = NO;
+    @try {
+        [testProperty xmlElement];
+    }
+    @catch (NSException *exception) {
+        exceptionThrown = YES;
+    }
+    @finally {
+        STAssertTrue(exceptionThrown, @"NSPropertyDescription should throw an exception if you ask for its xmlElement");
     }
 }
 

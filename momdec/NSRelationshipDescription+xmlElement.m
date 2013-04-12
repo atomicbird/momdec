@@ -13,8 +13,8 @@
 
 - (NSXMLElement *)xmlElement
 {
-    NSXMLElement *element = [[NSXMLElement alloc] initWithName:@"relationship"];
-    [self addCommonXMLDataToElement:element];
+    NSXMLElement *element = [super xmlElement];
+    [element setName:@"relationship"];
     
     if ([self minCount]) {
         [element addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:[NSString stringWithFormat:@"%ld", (unsigned long)[self minCount]]]];
