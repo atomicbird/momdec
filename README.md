@@ -1,18 +1,22 @@
 # momdec: Core Data Model Decompiler
 
-**momdec** is a command-line tool for Mac OS X that takes a compiled Core Data model and decompiles it to produce an equivalent `xcdatamodel` or `xcdatamodeld` suitable for use in Xcode.
+**momdec** is a command-line tool for Mac OS X that takes a compiled Core Data model and decompiles it to produce an equivalent `xcdatamodel` or `xcdatamodeld` suitable for use in Xcode. The resulting model file can also be used with [mogenerator](https://github.com/rentzsch/mogenerator) to produce source code files for Core Data entities which have custom subclasses.
 
 # Usage
 
+    momdec (Foo.mom|Foo.momd) [output directory]
+
+The first argument is the full path to a .mom or .momd, and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
+
 ## Command line
 
-    momdec Foo.mom
+    momdec Foo.mom /private/tmp/
 
-Creates `Foo.xcdatamodel` in the current directory.
+Creates `Foo.xcdatamodel` in /private/tmp/
 
     momdec Foo.momd
 
-Creates `Foo.xcdatamodeld` in the current working directory. This bundle will include all models present in the `momd`. It also includes a `.xccurrentversion` file so that Xcode will know which model is the current version.
+Creates `Foo.xcdatamodeld` in the current working directory. This bundle will include all model versions present in the `momd`. It also includes a `.xccurrentversion` file (if appropriate) so that Xcode will know which model is the current version.
 
 ## Source code
 
@@ -40,12 +44,10 @@ Developed with Mac OS X 10.8.3 and Xcode 4.6.1. May work with older versions of 
 
 MIT-style license, see LICENSE for details.
 
+# Limitations
+
+Min/max values on numeric attributes are currently not supported.
+
 # Credits
 
 By Tom Harrington, @atomicbird on most social networks.
-
-# To do
-
-* Fetch requests
-* Min/max attribute values-- which are part of the validationPredicates
-* Make sure model configurations work
