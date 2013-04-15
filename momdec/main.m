@@ -34,7 +34,7 @@ int main(int argc, const char * argv[])
             [NSManagedObjectModel decompileModelAtPath:filename inDirectory:directoryPath];
             return 0;
         } else {
-            fprintf(stderr, "Usage: momdec (foo.mom|foo.momd) [output directory]");
+            fprintf(stderr, "Usage: momdec (foo.mom|foo.momd) [output directory]\n");
         }
     }
     return 0;
