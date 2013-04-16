@@ -8,6 +8,8 @@
 
 The first argument is the full path to a .mom or .momd, and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
 
+If the first argument is a `.mom`, that is, a single managed object model, `momdec` produces a `.xcdatamodel`. If the first argument is a `.momd` (which potentially contains multiple managed object models), `momdec` produces a `.xcdatamodeld` containing all models found, as well as a `.xccurrentversion` file (if appropriate) indicating the current version
+
 ## Command line
 
     momdec Foo.mom /private/tmp/
@@ -16,7 +18,7 @@ Creates `Foo.xcdatamodel` in /private/tmp/
 
     momdec Foo.momd
 
-Creates `Foo.xcdatamodeld` in the current working directory. This bundle will include all model versions present in the `momd`. It also includes a `.xccurrentversion` file (if appropriate) so that Xcode will know which model is the current version.
+Creates `Foo.xcdatamodeld` in the current working directory. This bundle will include all model versions present in the `momd` and (if appropriate) a `.xccurrentversion` file.
 
 ## Source code
 
