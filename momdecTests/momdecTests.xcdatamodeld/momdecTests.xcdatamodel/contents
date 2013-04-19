@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AbstractEntity" isAbstract="YES" syncable="YES"/>
-    <entity name="Entity" representedClassName="EntityClass" parentEntity="AbstractEntity" elementID="myRenamingIdentifier" versionHashModifier="myVersionHashModifier" syncable="YES">
-        <attribute name="binaryAttribute" optional="YES" attributeType="Binary" spotlightIndexingEnabled="YES" storedInTruthFile="YES" syncable="YES">
+    <entity name="Entity" representedClassName="EntityClass" parentEntity="AbstractEntity" elementID="myRenamingIdentifier" versionHashModifier="myVersionHashModifier">
+        <attribute name="binaryAttribute" optional="YES" transient="YES" attributeType="Binary" spotlightIndexingEnabled="YES" storedInTruthFile="YES" syncable="YES">
             <userInfo>
                 <entry key="binaryBar" value="NO"/>
                 <entry key="binaryBaz" value="MAYBE"/>
@@ -11,12 +11,12 @@
         </attribute>
         <attribute name="booleanAttribute" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="dateAttribute" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="decimalAttribute" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="doubleAttribute" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="floatAttribute" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="int16Attribute" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="int32Attribute" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="int64Attribute" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="decimalAttribute" optional="YES" attributeType="Decimal" minValueString="-4" maxValueString="4" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="doubleAttribute" optional="YES" attributeType="Double" minValueString="-3.5" maxValueString="3.5" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="floatAttribute" optional="YES" attributeType="Float" minValueString="-2.5" maxValueString="2.5" defaultValueString="0" syncable="YES"/>
+        <attribute name="int16Attribute" optional="YES" attributeType="Integer 16" minValueString="-3" maxValueString="9" defaultValueString="0" syncable="YES"/>
+        <attribute name="int32Attribute" optional="YES" attributeType="Integer 32" minValueString="-11" maxValueString="11" defaultValueString="0" syncable="YES"/>
+        <attribute name="int64Attribute" optional="YES" attributeType="Integer 64" minValueString="-12" maxValueString="12" defaultValueString="0" syncable="YES"/>
         <attribute name="stringAttribute" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transformableAttribute" optional="YES" attributeType="Transformable" valueTransformerName="myValueTransformer" syncable="YES"/>
         <relationship name="otherEntities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OtherEntity" inverseName="mainEntity" inverseEntity="OtherEntity" syncable="YES"/>
@@ -48,9 +48,9 @@
         <memberEntity name="UnrelatedEntity"/>
     </configuration>
     <elements>
+        <element name="AbstractEntity" positionX="160" positionY="192" width="128" height="45"/>
         <element name="Entity" positionX="160" positionY="192" width="128" height="254"/>
         <element name="OtherEntity" positionX="160" positionY="192" width="128" height="60"/>
-        <element name="AbstractEntity" positionX="160" positionY="192" width="128" height="45"/>
         <element name="UnrelatedEntity" positionX="160" positionY="192" width="128" height="60"/>
     </elements>
 </model>

@@ -45,17 +45,13 @@
             case NSInteger64AttributeType:
                 defaultValueString = [NSString stringWithFormat:@"%ld", (long)[defaultValue integerValue]];
                 break;
-            case NSDecimalAttributeType:
-                defaultValueString = [defaultValue descriptionWithLocale:nil];
-                break;
             case NSBooleanAttributeType:
                 defaultValueString = [defaultValue boolValue] ? @"YES" : @"NO";
                 break;
+            case NSDecimalAttributeType:
+            case NSFloatAttributeType:
             case NSDoubleAttributeType:
                 defaultValueString = [NSString stringWithFormat:@"%g", [defaultValue doubleValue]];
-                break;
-            case NSFloatAttributeType:
-                defaultValueString = [NSString stringWithFormat:@"%g", [defaultValue floatValue]];
                 break;
             case NSStringAttributeType:
                 defaultValueString = defaultValue;
@@ -75,6 +71,52 @@
         if (defaultValueString != nil) {
             [element addAttribute:[NSXMLNode attributeWithName:@"defaultValueString" stringValue:defaultValueString]];
         }
+    }
+    
+    NSArray *validationPredicates = [self validationPredicates];
+    for (NSPredicate *validationPredicate in validationPredicates) {
+        if ([validationPredicate isKindOfClass:[NSComparisonPredicate class]]) {
+            NSComparisonPredicate *comparisonPredicate = (NSComparisonPredicate *)validationPredicate;
+            switch ([self attributeType]) {
+                case NSInteger16AttributeType:
+                case NSInteger32AttributeType:
+                case NSInteger64AttributeType:
+                {
+                    // Based on observing that integer types have min/max values specified by predicates with format "SELF >= %d" or "SELF <= %d".
+                    if ([comparisonPredicate predicateOperatorType] == NSLessThanOrEqualToPredicateOperatorType) {
+                        NSNumber *maxValue = [[comparisonPredicate rightExpression] constantValue];
+                        [element addAttribute:[NSXMLNode attributeWithName:@"maxValueString" stringValue:[NSString stringWithFormat:@"%ld", [maxValue integerValue]]]];
+                    } else if ([comparisonPredicate predicateOperatorType] == NSGreaterThanOrEqualToPredicateOperatorType) {
+                        NSNumber *minValue = [[comparisonPredicate rightExpression] constantValue];
+                        [element addAttribute:[NSXMLNode attributeWithName:@"minValueString" stringValue:[NSString stringWithFormat:@"%ld", [minValue integerValue]]]];
+                    }
+                    break;
+                }
+                case NSDecimalAttributeType:
+                case NSDoubleAttributeType:
+                case NSFloatAttributeType:
+                {
+                    // Due to a bug in Xcode, min/max on decimal attributes will fail if the min or max is not an integer.
+                    // At compile time, the min and max values are truncated to int values.
+                    // See rdar://problem/13677527 or http://openradar.appspot.com/radar?id=2948402
+                    // Also, although the attribute is decimal, the min and max values are NSNumber rather than NSDecimalNumber.
+                    // This code tries to get the best result by getting doubleValue, but obviously can't put back truncated non-int precision.
+                    if ([comparisonPredicate predicateOperatorType] == NSLessThanOrEqualToPredicateOperatorType) {
+                        NSNumber *maxValue = [[comparisonPredicate rightExpression] constantValue];
+                        [element addAttribute:[NSXMLNode attributeWithName:@"maxValueString" stringValue:[NSString stringWithFormat:@"%g", [maxValue doubleValue]]]];
+                    } else if ([comparisonPredicate predicateOperatorType] == NSGreaterThanOrEqualToPredicateOperatorType) {
+                        NSNumber *minValue = [[comparisonPredicate rightExpression] constantValue];
+                        [element addAttribute:[NSXMLNode attributeWithName:@"minValueString" stringValue:[NSString stringWithFormat:@"%g", [minValue doubleValue]]]];
+                    }
+                    break;
+                }
+                    
+                    
+                default:
+                    break;
+            }
+        }
+        
     }
     
     if ([self valueTransformerName] != nil) {

@@ -48,7 +48,9 @@ MIT-style license, see LICENSE for details.
 
 # Limitations
 
-Min/max values on numeric attributes are currently not supported.
+Min/max values on date attributes are currently not supported.
+
+Min/max values on Core Data decimal attributes will not be correct if the limits are not integers, because Xcode truncates the limits to integers at compile time (rdar://problem/13677527, also on [OpenRadar](http://openradar.appspot.com/radar?id=2948402)).
 
 # Credits
 

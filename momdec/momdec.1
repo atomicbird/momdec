@@ -69,5 +69,11 @@ If only one argument is provided, results are written in $PWD.
 .It Ev mogenerator
 Produces NSManagedObject subclasses based on a managed object model (https://github.com/rentzsch/mogenerator).
 .Sh BUGS              \" Document known, unremedied bugs 
-Min/max values on numeric attributes are currently not supported.
+Min/max values on date attributes are currently not supported.
+
+Min/max values on Core Data decimal attributes will not be correct if the limits are not integers, because Xcode truncates the limits to integers at compile time. Further details at
+.Ar rdar://problem/13677527
+or on OpenRadar at
+.Ar http://openradar.appspot.com/radar?id=2948402
+.
 .\" .Sh HISTORY           \" Document history if command behaves in a unique manner
