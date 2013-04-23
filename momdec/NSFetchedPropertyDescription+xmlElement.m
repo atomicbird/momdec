@@ -8,6 +8,7 @@
 
 #import "NSFetchedPropertyDescription+xmlElement.h"
 #import "NSPropertyDescription+xmlElement.h"
+#import "NSFetchRequest+xmlElement.h"
 
 @implementation NSFetchedPropertyDescription (xmlElement)
 
@@ -16,11 +17,8 @@
     NSXMLElement *element = [super xmlElement];
     [element setName:@"fetchedProperty"];
     
-    NSXMLElement *fetchRequestElement = [[NSXMLElement alloc] initWithName:@"fetchRequest"];
-    NSString *predicateString = [[[self fetchRequest] predicate] predicateFormat];
-    [fetchRequestElement addAttribute:[NSXMLNode attributeWithName:@"predicateString" stringValue:predicateString]];
+    NSXMLElement *fetchRequestElement = [[self fetchRequest] xmlElement];
     [fetchRequestElement addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:@"fetchedPropertyFetchRequest"]];
-    [fetchRequestElement addAttribute:[NSXMLNode attributeWithName:@"entity" stringValue:[[self fetchRequest] entityName]]];
     
     [element addChild:fetchRequestElement];
     
