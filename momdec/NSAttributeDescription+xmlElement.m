@@ -58,9 +58,6 @@
                 break;
             case NSDateAttributeType:
             {
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss ZZZZZ"];
-                defaultValueString = [formatter stringFromDate:defaultValue];
                 NSTimeInterval defaultDateTimeInterval = [defaultValue timeIntervalSinceReferenceDate];
                 [element addAttribute:[NSXMLNode attributeWithName:@"defaultDateTimeInterval" stringValue:[NSString stringWithFormat:@"%.0f", defaultDateTimeInterval]]];
                 break;
@@ -107,6 +104,17 @@
                     } else if ([comparisonPredicate predicateOperatorType] == NSGreaterThanOrEqualToPredicateOperatorType) {
                         NSNumber *minValue = [[comparisonPredicate rightExpression] constantValue];
                         [element addAttribute:[NSXMLNode attributeWithName:@"minValueString" stringValue:[NSString stringWithFormat:@"%g", [minValue doubleValue]]]];
+                    }
+                    break;
+                }
+                case NSDateAttributeType:
+                {
+                    if ([comparisonPredicate predicateOperatorType] == NSLessThanOrEqualToPredicateOperatorType) {
+                        NSNumber *maxDateTimeInterval = [[comparisonPredicate rightExpression] constantValue];
+                        [element addAttribute:[NSXMLNode attributeWithName:@"maxDateTimeInterval" stringValue:[NSString stringWithFormat:@"%f", [maxDateTimeInterval doubleValue]]]];
+                    } else if ([comparisonPredicate predicateOperatorType] == NSGreaterThanOrEqualToPredicateOperatorType) {
+                        NSNumber *minDateTimeInterval = [[comparisonPredicate rightExpression] constantValue];
+                        [element addAttribute:[NSXMLNode attributeWithName:@"minDateTimeInterval" stringValue:[NSString stringWithFormat:@"%f", [minDateTimeInterval doubleValue]]]];
                     }
                     break;
                 }

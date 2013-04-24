@@ -10,7 +10,7 @@
             </userInfo>
         </attribute>
         <attribute name="booleanAttribute" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="dateAttribute" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateAttribute" optional="YES" attributeType="Date" minDateTimeInterval="284000400" minValueString="2010-01-01 01:00:00" maxDateTimeInterval="602395200" maxValueString="2020-02-03 04:00" defaultDateTimeInterval="388411200" defaultValueString="2013-04-23 12:00:00 +0000" syncable="YES"/>
         <attribute name="decimalAttribute" optional="YES" attributeType="Decimal" minValueString="-4" maxValueString="4" defaultValueString="0.0" syncable="YES"/>
         <attribute name="doubleAttribute" optional="YES" attributeType="Double" minValueString="-3.5" maxValueString="3.5" defaultValueString="0.0" syncable="YES"/>
         <attribute name="floatAttribute" optional="YES" attributeType="Float" minValueString="-2.5" maxValueString="2.5" defaultValueString="0" syncable="YES"/>
@@ -19,7 +19,7 @@
         <attribute name="int64Attribute" optional="YES" attributeType="Integer 64" minValueString="-12" maxValueString="12" defaultValueString="0" syncable="YES"/>
         <attribute name="stringAttribute" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transformableAttribute" optional="YES" attributeType="Transformable" valueTransformerName="myValueTransformer" syncable="YES"/>
-        <relationship name="otherEntities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OtherEntity" inverseName="mainEntity" inverseEntity="OtherEntity" syncable="YES"/>
+        <relationship name="otherEntities" optional="YES" toMany="YES" minCount="1" maxCount="9" deletionRule="Nullify" destinationEntity="OtherEntity" inverseName="mainEntity" inverseEntity="OtherEntity" syncable="YES"/>
         <fetchedProperty name="yesBooleans" optional="YES" syncable="YES">
             <fetchRequest name="fetchedPropertyFetchRequest" entity="Entity" predicateString="booleanAttribute = YES"/>
         </fetchedProperty>
