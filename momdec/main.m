@@ -24,10 +24,10 @@ int main(int argc, const char * argv[])
         NSArray *args = [[NSProcessInfo processInfo] arguments];
         
         if ([args count] > 1) {
-            NSString *filename = [args objectAtIndex:1];
+            NSString *filename = args[1];
             NSString *directoryPath;
             if ([args count] > 2) {
-                directoryPath = [args objectAtIndex:2];
+                directoryPath = args[2];
             } else {
                 directoryPath = @".";
             }

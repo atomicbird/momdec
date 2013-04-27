@@ -37,7 +37,7 @@
     // Fetch request templates
     NSDictionary *fetchRequestTemplatesByName = [self fetchRequestTemplatesByName];
     for (NSString *fetchRequestName in fetchRequestTemplatesByName) {
-        NSFetchRequest *fetchRequest = [fetchRequestTemplatesByName objectForKey:fetchRequestName];
+        NSFetchRequest *fetchRequest = fetchRequestTemplatesByName[fetchRequestName];
         NSXMLElement *fetchRequestElement = [fetchRequest xmlElement];
         [fetchRequestElement addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:fetchRequestName]];
         [element addChild:fetchRequestElement];
@@ -122,7 +122,7 @@
             } else if ([filename isEqualToString:@"VersionInfo.plist"]) {
                 // Process version info for the momd
                 NSDictionary *versionInfo = [NSDictionary dictionaryWithContentsOfFile:fullPath];
-                NSString *currentVersionName = [versionInfo objectForKey:@"NSManagedObjectModel_CurrentVersionName"];
+                NSString *currentVersionName = versionInfo[@"NSManagedObjectModel_CurrentVersionName"];
                 if (currentVersionName != nil) {
                     NSString *currentModelName = [currentVersionName stringByAppendingPathExtension:@"xcdatamodel"];
                     NSDictionary *versionDictionary = @{@"_XCCurrentVersionName": currentModelName};

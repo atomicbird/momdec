@@ -52,16 +52,16 @@
     NSDictionary *originalEntities = [compiledModel entitiesByName];
     NSDictionary *recompiledEntities = [recompiledModel entitiesByName];
     for (NSString *entityName in originalEntities) {
-        NSEntityDescription *originalEntity = [originalEntities objectForKey:entityName];
-        NSEntityDescription *recompiledEntity = [recompiledEntities objectForKey:entityName];
+        NSEntityDescription *originalEntity = originalEntities[entityName];
+        NSEntityDescription *recompiledEntity = recompiledEntities[entityName];
         STAssertEqualObjects(originalEntity, recompiledEntity, @"Entities do not match: %@", entityName);
     }
 
     NSDictionary *originalFetchRequests = [compiledModel fetchRequestTemplatesByName];
     NSDictionary *recompiledFetchRequests = [recompiledModel fetchRequestTemplatesByName];
     for (NSString *fetchRequestName in originalFetchRequests) {
-        NSFetchRequest *originalFetchRequest = [originalFetchRequests objectForKey:fetchRequestName];
-        NSFetchRequest *recompiledFetchRequest = [recompiledFetchRequests objectForKey:fetchRequestName];
+        NSFetchRequest *originalFetchRequest = originalFetchRequests[fetchRequestName];
+        NSFetchRequest *recompiledFetchRequest = recompiledFetchRequests[fetchRequestName];
         STAssertEqualObjects(originalFetchRequest, recompiledFetchRequest, @"Fetch requests do not match: %@", fetchRequestName);
     }
     
