@@ -14,7 +14,7 @@
 .Nd Core Data managed object model decompiler
 .Sh SYNOPSIS             \" Section Header - required - don't modify
 .Nm
-(Foo.mom|Foo.momd)
+(Foo.mom|Foo.momd|Foo.app)
 .Op Ar output dir              \" [file]
 .Sh DESCRIPTION          \" Section Header - required - don't modify
 .Nm momdec
@@ -46,7 +46,13 @@ produces a
 .Ar .xcdatamodeld
 containing all models found, as well as a
 .Ar .xccurrentversion
-file (if appropriate) indicating the current version
+file (if appropriate) indicating the current version. If the first argument is an application bundle, 
+.Nm momdec
+locates the first 
+.Ar .mom
+or
+.Ar .momd
+in the bundle and decompiles it.
 
 See this project's README.md for more detail.
 .Sh EXAMPLES

@@ -134,12 +134,36 @@
     return xcdatamodeldPath;
 }
 
++ (NSString *)_decompileAppBundleAtPath:(NSString *)appBundlePath inDirectory:(NSString *)resultDirectoryPath
+{
+    BOOL isDirectory;
+    NSString *xcModelPath = nil;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:appBundlePath isDirectory:&isDirectory] && isDirectory) {
+        // Find the first mom or momd in the app bundle, decompile it and return.
+        NSDirectoryEnumerator *appBundleEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:appBundlePath];
+        NSString *currentPath;
+        while (((currentPath = [appBundleEnumerator nextObject])) && (xcModelPath == nil)) {
+            if ([currentPath hasSuffix:@".mom"]) {
+                NSString *fullPath = [appBundlePath stringByAppendingPathComponent:currentPath];
+                xcModelPath = [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:resultDirectoryPath];
+            } else if ([currentPath hasSuffix:@".momd"]) {
+                NSString *fullPath = [appBundlePath stringByAppendingPathComponent:currentPath];
+                xcModelPath = [NSManagedObjectModel _decompileModelBundleAtPath:fullPath inDirectory:resultDirectoryPath];
+            }
+        }
+    }
+    return xcModelPath;
+}
+
 + (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath
 {
     if ([modelPath hasSuffix:@".mom"]) {
         return [NSManagedObjectModel _decompileSingleModelFile:modelPath inDirectory:resultDirectoryPath];
     } else if ([modelPath hasSuffix:@".momd"]) {
         return [NSManagedObjectModel _decompileModelBundleAtPath:modelPath inDirectory:resultDirectoryPath];
+    } else if ([modelPath hasSuffix:@".app"]) {
+        return [NSManagedObjectModel _decompileAppBundleAtPath:modelPath inDirectory:resultDirectoryPath];
     } else {
         NSLog(@"Unrecognized file: %@", modelPath);
         return nil;

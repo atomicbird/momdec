@@ -4,11 +4,11 @@
 
 # Usage
 
-    momdec (Foo.mom|Foo.momd) [output directory]
+    momdec (Foo.mom|Foo.momd|Foo.app) [output directory]
 
-The first argument is the full path to a .mom or .momd, and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
+The first argument is the full path to a .mom, .momd, or .app, and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
 
-If the first argument is a `.mom`, that is, a single managed object model, `momdec` produces a `.xcdatamodel`. If the first argument is a `.momd` (which potentially contains multiple managed object models), `momdec` produces a `.xcdatamodeld` containing all models found, as well as a `.xccurrentversion` file (if appropriate) indicating the current version
+If the first argument is a `.mom`, that is, a single managed object model, `momdec` produces a `.xcdatamodel`. If the first argument is a `.momd` (which potentially contains multiple managed object models), `momdec` produces a `.xcdatamodeld` containing all models found, as well as a `.xccurrentversion` file (if appropriate) indicating the current version. If the first argument is an application bundle, `momdec` locates the first `.mom` or `.momd` in the bundle and decompiles it.
 
 ## Command line
 
@@ -34,7 +34,7 @@ Returns a full `NSXMLDocument` representing the model. This just calls `xmlEleme
 
     + (NSString *)decompileModelAtPath:(NSString *)momPath;
 
-Decompiles the `mom` or `momd` at the specified path and returns the file name of the decompiled model.
+Decompiles the `mom`, `momd`, or `app` at the specified path and returns the file name of the decompiled model.
 
 Other categories consist of just an `xmlElement` method, which returns an `NSXMLElement` representing the receiver's portion of the decompiled model document.
 
