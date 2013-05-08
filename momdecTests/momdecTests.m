@@ -38,7 +38,10 @@
     // Decompile the model into a temporary directory
     NSString *momdecTestDir = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"momdecTests-%d", getpid()]];
     [[NSFileManager defaultManager] createDirectoryAtPath:momdecTestDir withIntermediateDirectories:YES attributes:0 error:nil];
-    NSString *decompiledModelContainerPath = [NSManagedObjectModel decompileModelAtPath:[momURL path] inDirectory:momdecTestDir];
+    NSError *error = nil;
+    NSString *decompiledModelContainerPath = [NSManagedObjectModel decompileModelAtPath:[momURL path] inDirectory:momdecTestDir error:&error];
+    STAssertNil(error, [NSString stringWithFormat:@"Error decompiling model: %@", error]);
+    STAssertTrue(([decompiledModelContainerPath length] > 0), @"Zero-length path after decompiling model");
     
     // Compile the temporary file copy
     NSString *recompiledModelPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.momd"];

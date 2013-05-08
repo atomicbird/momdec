@@ -72,7 +72,7 @@
     return modelDocument;
 }
 
-+ (NSString *)_decompileSingleModelFile:(NSString *)momPath inDirectory:(NSString *)resultDirectoryPath
++ (NSString *)_decompileSingleModelFile:(NSString *)momPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
 {
     NSData *modelXMLData = nil;
     NSString *xcdatamodelPath = nil;
@@ -80,13 +80,14 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:momPath]) {
         NSManagedObjectModel *model = nil;
         @try {
+            // The best way to find out if the file contains a valid model is to try and load it.
+            // Sadly, non-model data causes exceptions rather than returning error status.
             model = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:momPath]];
         }
         @catch (NSException *exception) {
-            NSLog(@"Couldn't open model file %@", momPath);
-        }
-        @finally {
-            
+            if (error != nil) {
+                *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Couldn't open model file: %@", momPath]}];
+            }
         }
         
         if (model != nil) {
@@ -104,7 +105,7 @@
     return xcdatamodelPath;
 }
 
-+ (NSString *)_decompileModelBundleAtPath:(NSString *)momdPath inDirectory:(NSString *)resultDirectoryPath
++ (NSString *)_decompileModelBundleAtPath:(NSString *)momdPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
 {
     BOOL isDirectory;
     NSString *xcdatamodeldPath = nil;
@@ -118,7 +119,7 @@
             NSString *fullPath = [momdPath stringByAppendingPathComponent:filename];
             if ([filename hasSuffix:@".mom"]) {
                 // Process each model in the momd
-                [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:xcdatamodeldPath];
+                [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:xcdatamodeldPath error:error];
             } else if ([filename isEqualToString:@"VersionInfo.plist"]) {
                 // Process version info for the momd
                 NSDictionary *versionInfo = [NSDictionary dictionaryWithContentsOfFile:fullPath];
@@ -134,7 +135,7 @@
     return xcdatamodeldPath;
 }
 
-+ (NSString *)_decompileAppBundleAtPath:(NSString *)appBundlePath inDirectory:(NSString *)resultDirectoryPath
++ (NSString *)_decompileAppBundleAtPath:(NSString *)appBundlePath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
 {
     BOOL isDirectory;
     NSString *xcModelPath = nil;
@@ -146,30 +147,34 @@
         while (((currentPath = [appBundleEnumerator nextObject])) && (xcModelPath == nil)) {
             if ([currentPath hasSuffix:@".mom"]) {
                 NSString *fullPath = [appBundlePath stringByAppendingPathComponent:currentPath];
-                xcModelPath = [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:resultDirectoryPath];
+                xcModelPath = [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:resultDirectoryPath error:error];
             } else if ([currentPath hasSuffix:@".momd"]) {
                 NSString *fullPath = [appBundlePath stringByAppendingPathComponent:currentPath];
-                xcModelPath = [NSManagedObjectModel _decompileModelBundleAtPath:fullPath inDirectory:resultDirectoryPath];
+                xcModelPath = [NSManagedObjectModel _decompileModelBundleAtPath:fullPath inDirectory:resultDirectoryPath error:error];
             }
         }
     }
     if (xcModelPath == nil) {
-        NSLog(@"Could not find a compiled model in %@", appBundlePath);
+        if (error != nil) {
+            *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Could not find a compiled model at %@", appBundlePath]}];
+        }
     }
     return xcModelPath;
 }
 
-+ (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath
++ (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
 {
     modelPath = [modelPath stringByStandardizingPath];
     if ([modelPath hasSuffix:@".mom"]) {
-        return [NSManagedObjectModel _decompileSingleModelFile:modelPath inDirectory:resultDirectoryPath];
+        return [NSManagedObjectModel _decompileSingleModelFile:modelPath inDirectory:resultDirectoryPath error:error];
     } else if ([modelPath hasSuffix:@".momd"]) {
-        return [NSManagedObjectModel _decompileModelBundleAtPath:modelPath inDirectory:resultDirectoryPath];
+        return [NSManagedObjectModel _decompileModelBundleAtPath:modelPath inDirectory:resultDirectoryPath error:error];
     } else if ([modelPath hasSuffix:@".app"]) {
-        return [NSManagedObjectModel _decompileAppBundleAtPath:modelPath inDirectory:resultDirectoryPath];
+        return [NSManagedObjectModel _decompileAppBundleAtPath:modelPath inDirectory:resultDirectoryPath error:error];
     } else {
-        NSLog(@"Unrecognized file: %@", modelPath);
+        if (error != nil) {
+            *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Unrecognized file: %@", modelPath]}];
+        }
         return nil;
     }
 }

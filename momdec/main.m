@@ -31,7 +31,12 @@ int main(int argc, const char * argv[])
             } else {
                 directoryPath = @".";
             }
-            [NSManagedObjectModel decompileModelAtPath:filename inDirectory:directoryPath];
+            NSError *error = nil;
+            NSString *path = [NSManagedObjectModel decompileModelAtPath:filename inDirectory:directoryPath error:&error];
+            if (path == nil) {
+                NSLog(@"%@", [error localizedDescription]);
+                return -1;
+            }
             return 0;
         } else {
             fprintf(stderr, "Usage: momdec (foo.mom|foo.momd) [output directory]\n");
