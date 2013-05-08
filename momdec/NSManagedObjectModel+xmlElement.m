@@ -153,11 +153,15 @@
             }
         }
     }
+    if (xcModelPath == nil) {
+        NSLog(@"Could not find a compiled model in %@", appBundlePath);
+    }
     return xcModelPath;
 }
 
 + (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath
 {
+    modelPath = [modelPath stringByStandardizingPath];
     if ([modelPath hasSuffix:@".mom"]) {
         return [NSManagedObjectModel _decompileSingleModelFile:modelPath inDirectory:resultDirectoryPath];
     } else if ([modelPath hasSuffix:@".momd"]) {
