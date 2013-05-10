@@ -47,6 +47,7 @@
     NSString *recompiledModelPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.momd"];
     NSTask *compileTask = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/xcrun" arguments:@[@"momc", decompiledModelContainerPath, recompiledModelPath]];
     [compileTask waitUntilExit];
+    STAssertEquals([compileTask terminationStatus], 0, @"xrun failed to compile the model, try running 'xcrun momc' in Terminal.app and trying again");
     
     // Load the recompiled model
     NSManagedObjectModel *recompiledModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:recompiledModelPath]];
