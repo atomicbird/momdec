@@ -4,11 +4,16 @@
 
 # Usage
 
-    momdec (Foo.mom|Foo.momd|Foo.app) [output directory]
+    momdec (Foo.mom|Foo.momd|Foo.app|baseline.zip) [output directory]
 
-The first argument is the full path to a .mom, .momd, or .app, and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
+The first argument is the full path used to locate a compiled managed object model file, and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
 
-If the first argument is a `.mom`, that is, a single managed object model, `momdec` produces a `.xcdatamodel`. If the first argument is a `.momd` (which potentially contains multiple managed object models), `momdec` produces a `.xcdatamodeld` containing all models found, as well as a `.xccurrentversion` file (if appropriate) indicating the current version. If the first argument is an application bundle, `momdec` locates the first `.mom` or `.momd` in the bundle and decompiles it.
+The first argument can be one of several possibilities:
+
+* If it's a `.mom`, that is, a single managed object model, `momdec` produces a `.xcdatamodel`.
+* If it's a `.momd` (which potentially contains multiple managed object models), `momdec` produces a `.xcdatamodeld` containing all models found, as well as a `.xccurrentversion` file (if appropriate) indicating the current version.
+* If it's a `.app` application bundle, `momdec` locates the first `.mom` or `.momd` in the bundle and decompiles it.
+* If it's an iCloud-style `baseline.zip` file, `momdec` locates the enclosed data model and produces a `.xcdatamodel` from it.
 
 ## Command line
 
@@ -32,9 +37,9 @@ Returns an `NSXMLElement` representing the model
 
 Returns a full `NSXMLDocument` representing the model. This just calls `xmlElement`, sets that element as the document root, and adds document-level metadata.
 
-    + (NSString *)decompileModelAtPath:(NSString *)momPath;
+    + (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error;
 
-Decompiles the `mom`, `momd`, or `app` at the specified path and returns the file name of the decompiled model.
+Decompiles the `mom`, `momd`, `app`, or `baseline.zip` at the specified path, saves the contents in the result directory, and returns the full path of the decompiled model.
 
 Other categories consist of just an `xmlElement` method, which returns an `NSXMLElement` representing the receiver's portion of the decompiled model document.
 

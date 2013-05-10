@@ -14,7 +14,7 @@
 .Nd Core Data managed object model decompiler
 .Sh SYNOPSIS             \" Section Header - required - don't modify
 .Nm
-(Foo.mom|Foo.momd|Foo.app)
+(Foo.mom|Foo.momd|Foo.app|baseline.zip)
 .Op Ar output dir              \" [file]
 .Sh DESCRIPTION          \" Section Header - required - don't modify
 .Nm momdec
@@ -31,49 +31,43 @@ The first argument is the full path to a
 or
 .Ar .momd
 , and the second is the location where the results should be written. If the second argument is omitted, the current working directory is used. Output files are automatically named based on the inputs.
-
-If the first argument is a 
-.Ar .mom
-, that is, a single managed object model, 
-.Nm momdec
-produces a 
-.Ar .xcdatamodel
-. If the first argument is a 
-.Ar .momd
-(which potentially contains multiple managed object models),
-.Nm momdec
-produces a
-.Ar .xcdatamodeld
-containing all models found, as well as a
-.Ar .xccurrentversion
-file (if appropriate) indicating the current version. If the first argument is an application bundle, 
-.Nm momdec
-locates the first 
-.Ar .mom
-or
-.Ar .momd
-in the bundle and decompiles it.
-
+.Pp
+The first argument can be one of several possibilities:
+.Bl -tag -width -indent
+.It Ev .mom
+If it's a .mom, that is, a single managed object model, momdec produces a .xcdatamodel.
+.It Ev .momd
+If it's a .momd (which potentially contains multiple managed object models), momdec produces a .xcdatamodeld containing all models found, as well as a .xccurrentversion file (if appropriate) indicating the current version.
+.It Ev .app
+If it's a .app application bundle, momdec locates the first .mom or .momd` in the bundle and decompiles it.
+.It Ev baseline.zip
+If it's an iCloud-style baseline.zip file, momdec locates the enclosed data model and produces a .xcdatamodel from it.
+.El
+.Pp
 See this project's README.md for more detail.
 .Sh EXAMPLES
 Create Foo.xcdatamodel in /private/tmp/:
-
+.Pp
     momdec Foo.mom /private/tmp/
-
+.Pp
 Create Foo.xcdatamodeld in the current working directory. This bundle will include all model versions present in the momd and (if appropriate) a .xccurrentversion file:
-
+.Pp
     momdec Foo.momd
-
+.Pp
 .Sh ENVIRONMENT      \" May not be needed
-.Bl -tag -width "PWD" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.Bl -tag -width -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
 .It Ev PWD
 If only one argument is provided, results are written in $PWD.
+.El
 .Sh SEE ALSO
 .\" List links in ascending order by section, alphabetically within a section.
 .\" Please do not reference files that do not exist without filing a bug report
-.Bl -tag -width "mogenerator" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.Bl -tag -width -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
 .It Ev mogenerator
 Produces NSManagedObject subclasses based on a managed object model (https://github.com/rentzsch/mogenerator).
+.It Ev momcom
+Experimental open-source data model compiler (https://github.com/atomicbird/momcom).
+.El
 .Sh BUGS              \" Document known, unremedied bugs 
 Min/max values on Core Data decimal attributes will not be correct if the limits are not integers, because Xcode truncates the limits to integers at compile time. Further details at
 .Ar rdar://problem/13677527

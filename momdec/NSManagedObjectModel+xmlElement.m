@@ -72,10 +72,10 @@
     return modelDocument;
 }
 
-+ (NSString *)_decompileSingleModelFile:(NSString *)momPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
++ (BOOL)_decompileSingleModelFile:(NSString *)momPath inDirectory:(NSString *)xcdatamodelPath error:(NSError **)error
 {
     NSData *modelXMLData = nil;
-    NSString *xcdatamodelPath = nil;
+    BOOL success = YES;
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:momPath]) {
         NSManagedObjectModel *model = nil;
@@ -87,6 +87,7 @@
         @catch (NSException *exception) {
             if (error != nil) {
                 *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Couldn't open model file: %@", momPath]}];
+                success = NO;
             }
         }
         
@@ -97,42 +98,50 @@
     }
     
     if (modelXMLData != nil) {
-        xcdatamodelPath = [resultDirectoryPath stringByAppendingPathComponent:[[[momPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodel"]];
-        [[NSFileManager defaultManager] createDirectoryAtPath:xcdatamodelPath withIntermediateDirectories:YES attributes:0 error:nil];
-        NSString *modelXMLPath = [xcdatamodelPath stringByAppendingPathComponent:@"contents"];
-        [modelXMLData writeToFile:modelXMLPath atomically:YES];
+        success = [[NSFileManager defaultManager] createDirectoryAtPath:xcdatamodelPath withIntermediateDirectories:YES attributes:0 error:error];
+        if (success) {
+            NSString *modelXMLPath = [xcdatamodelPath stringByAppendingPathComponent:@"contents"];
+            success = [modelXMLData writeToFile:modelXMLPath atomically:YES];
+        }
     }
-    return xcdatamodelPath;
+    return success;
 }
 
-+ (NSString *)_decompileModelBundleAtPath:(NSString *)momdPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
++ (BOOL)_decompileModelBundleAtPath:(NSString *)momdPath inDirectory:(NSString *)xcdatamodeldPath error:(NSError **)error
 {
     BOOL isDirectory;
-    NSString *xcdatamodeldPath = nil;
+    BOOL success = YES;
     if ([[NSFileManager defaultManager] fileExistsAtPath:momdPath isDirectory:&isDirectory] && isDirectory) {
         // Create a new xcdatamodeld container
-        xcdatamodeldPath = [resultDirectoryPath stringByAppendingPathComponent:[[[momdPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodeld"]];
-        [[NSFileManager defaultManager] createDirectoryAtPath:xcdatamodeldPath withIntermediateDirectories:YES attributes:0 error:nil];
+        success = [[NSFileManager defaultManager] createDirectoryAtPath:xcdatamodeldPath withIntermediateDirectories:YES attributes:0 error:error];
         
-        NSArray *momdContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:momdPath error:nil];
-        for (NSString *filename in momdContents) {
-            NSString *fullPath = [momdPath stringByAppendingPathComponent:filename];
-            if ([filename hasSuffix:@".mom"]) {
-                // Process each model in the momd
-                [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:xcdatamodeldPath error:error];
-            } else if ([filename isEqualToString:@"VersionInfo.plist"]) {
-                // Process version info for the momd
-                NSDictionary *versionInfo = [NSDictionary dictionaryWithContentsOfFile:fullPath];
-                NSString *currentVersionName = versionInfo[@"NSManagedObjectModel_CurrentVersionName"];
-                if (currentVersionName != nil) {
-                    NSString *currentModelName = [currentVersionName stringByAppendingPathExtension:@"xcdatamodel"];
-                    NSDictionary *versionDictionary = @{@"_XCCurrentVersionName": currentModelName};
-                    [versionDictionary writeToFile:[xcdatamodeldPath stringByAppendingPathComponent:@".xccurrentversion"] atomically:YES];
+        if (success) {
+            NSArray *momdContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:momdPath error:error];
+            if ([momdContents count] > 0) {
+                for (NSString *filename in momdContents) {
+                    NSString *fullPath = [momdPath stringByAppendingPathComponent:filename];
+                    if ([filename hasSuffix:@".mom"]) {
+                        // Process each model in the momd. Name the .xcdatamodel based on the .mom filename.
+                        NSString *xcdatamodelPath = [xcdatamodeldPath stringByAppendingPathComponent:[[filename stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodel"]];
+                        success = [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:xcdatamodelPath error:error];
+                        if (!success) {
+                            break;
+                        }
+                    } else if ([filename isEqualToString:@"VersionInfo.plist"]) {
+                        // Process version info for the momd
+                        NSDictionary *versionInfo = [NSDictionary dictionaryWithContentsOfFile:fullPath];
+                        NSString *currentVersionName = versionInfo[@"NSManagedObjectModel_CurrentVersionName"];
+                        if (currentVersionName != nil) {
+                            NSString *currentModelName = [currentVersionName stringByAppendingPathExtension:@"xcdatamodel"];
+                            NSDictionary *versionDictionary = @{@"_XCCurrentVersionName": currentModelName};
+                            [versionDictionary writeToFile:[xcdatamodeldPath stringByAppendingPathComponent:@".xccurrentversion"] atomically:YES];
+                        }
+                    }
                 }
             }
         }
     }
-    return xcdatamodeldPath;
+    return success;
 }
 
 + (NSString *)_decompileAppBundleAtPath:(NSString *)appBundlePath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
@@ -146,11 +155,17 @@
         NSString *currentPath;
         while (((currentPath = [appBundleEnumerator nextObject])) && (xcModelPath == nil)) {
             if ([currentPath hasSuffix:@".mom"]) {
-                NSString *fullPath = [appBundlePath stringByAppendingPathComponent:currentPath];
-                xcModelPath = [NSManagedObjectModel _decompileSingleModelFile:fullPath inDirectory:resultDirectoryPath error:error];
+                NSString *fullMomPath = [appBundlePath stringByAppendingPathComponent:currentPath];
+                NSString *xcdatamodelPath = [resultDirectoryPath stringByAppendingPathComponent:[[[appBundlePath lastPathComponent] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodel"]];
+                if([NSManagedObjectModel _decompileSingleModelFile:fullMomPath inDirectory:xcdatamodelPath error:error]) {
+                    xcModelPath = xcdatamodelPath;
+                }
             } else if ([currentPath hasSuffix:@".momd"]) {
-                NSString *fullPath = [appBundlePath stringByAppendingPathComponent:currentPath];
-                xcModelPath = [NSManagedObjectModel _decompileModelBundleAtPath:fullPath inDirectory:resultDirectoryPath error:error];
+                NSString *fullMomdPath = [appBundlePath stringByAppendingPathComponent:currentPath];
+                NSString *xcdatamodeldPath = [resultDirectoryPath stringByAppendingPathComponent:[[[appBundlePath lastPathComponent] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodeld"]];
+                if ([NSManagedObjectModel _decompileModelBundleAtPath:fullMomdPath inDirectory:xcdatamodeldPath error:error]) {
+                    xcModelPath = xcdatamodeldPath;
+                }
             }
         }
     }
@@ -162,20 +177,94 @@
     return xcModelPath;
 }
 
++ (NSString *)_decompileModelFromBaseline:(NSString *)baselinePath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
+{
+    BOOL isDirectory;
+    BOOL success = YES;
+    NSString *xcModelPath = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:baselinePath isDirectory:&isDirectory] && (!isDirectory)) {
+        // Unpack baseline.zip into a temporary directory
+        NSString *tempDir = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"momdec-%d", getpid()]];
+        success = [[NSFileManager defaultManager] createDirectoryAtPath:tempDir withIntermediateDirectories:YES attributes:nil error:error];
+        if (!success) {
+            return nil;
+        }
+        NSTask *unzipTask = [[NSTask alloc] init];
+        [unzipTask setLaunchPath:@"/usr/bin/unzip"];
+        [unzipTask setArguments:@[baselinePath, @"-d", tempDir]];
+        NSPipe *taskStderr = [NSPipe pipe];
+        [unzipTask setStandardError:taskStderr];
+        [unzipTask launch];
+        [unzipTask waitUntilExit];
+        
+        if ([unzipTask terminationStatus] != 0) {
+            success = NO;
+            if (error != nil) {
+                NSFileHandle *taskStderrFileHandle = [taskStderr fileHandleForReading];
+                NSData *taskStderrData = [taskStderrFileHandle readDataToEndOfFile];
+                NSString *taskStdErrString = [[NSString alloc] initWithData:taskStderrData encoding:NSUTF8StringEncoding];
+                *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: taskStdErrString}];
+            }
+        }
+        
+        if (success) {
+            // Get the model name
+            NSString *xcdatamodelPath = nil;
+            NSString *storeFilenamePath = [tempDir stringByAppendingPathComponent:@"storeFilename"];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:storeFilenamePath]) {
+                // storeFileName contains a string formated as "Foo.sqlite". Set the model name based on that.
+                NSString *storeFilename = [NSString stringWithContentsOfFile:storeFilenamePath encoding:NSUTF8StringEncoding error:error];
+                if ([storeFilename length] == 0) {
+                    success = NO;
+                } else {
+                    NSString *xcdatamodelFileName = [[storeFilename stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodel"];
+                    xcdatamodelPath = [resultDirectoryPath stringByAppendingPathComponent:xcdatamodelFileName];
+                }
+            } else {
+                success = NO;
+                if (error != nil) {
+                    *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Incomplete baseline.zip contents"}];
+                }
+            }
+            
+            // Get the model itself
+            NSString *momPath = [tempDir stringByAppendingPathComponent:@"gcmodel"];
+            
+            if ((xcdatamodelPath != nil) && (momPath != nil)) {
+                success = [NSManagedObjectModel _decompileSingleModelFile:momPath inDirectory:xcdatamodelPath error:error];
+                if (success) {
+                    xcModelPath = xcdatamodelPath;
+                }
+            }
+        }
+    }
+    return xcModelPath;
+}
+
 + (NSString *)decompileModelAtPath:(NSString *)modelPath inDirectory:(NSString *)resultDirectoryPath error:(NSError **)error
 {
     modelPath = [modelPath stringByStandardizingPath];
+    NSString *decompiledPath = nil;
     if ([modelPath hasSuffix:@".mom"]) {
-        return [NSManagedObjectModel _decompileSingleModelFile:modelPath inDirectory:resultDirectoryPath error:error];
+        NSString *xcdatamodelPath = [resultDirectoryPath stringByAppendingPathComponent:[[[modelPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodel"]];
+        if ([NSManagedObjectModel _decompileSingleModelFile:modelPath inDirectory:xcdatamodelPath error:error]) {
+            decompiledPath = xcdatamodelPath;
+        }
     } else if ([modelPath hasSuffix:@".momd"]) {
-        return [NSManagedObjectModel _decompileModelBundleAtPath:modelPath inDirectory:resultDirectoryPath error:error];
+        NSString *xcdatamodeldPath = [resultDirectoryPath stringByAppendingPathComponent:[[[modelPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodeld"]];
+        if ([NSManagedObjectModel _decompileModelBundleAtPath:modelPath inDirectory:xcdatamodeldPath error:error]) {
+            decompiledPath = xcdatamodeldPath;
+        }
     } else if ([modelPath hasSuffix:@".app"]) {
-        return [NSManagedObjectModel _decompileAppBundleAtPath:modelPath inDirectory:resultDirectoryPath error:error];
+        decompiledPath = [NSManagedObjectModel _decompileAppBundleAtPath:modelPath inDirectory:resultDirectoryPath error:error];
+    } else if ([[modelPath lastPathComponent] isEqualToString:@"baseline.zip"]) {
+        // Get the model from an iCloud baseline file
+        decompiledPath = [NSManagedObjectModel _decompileModelFromBaseline:modelPath inDirectory:resultDirectoryPath error:error];
     } else {
         if (error != nil) {
             *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Unrecognized file: %@", modelPath]}];
         }
-        return nil;
     }
+    return decompiledPath;
 }
 @end
