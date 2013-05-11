@@ -43,7 +43,7 @@
     <entity name="UnrelatedEntity" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <fetchRequest name="FetchRequest" entity="Entity" predicateString="booleanAttribute == 1 AND floatAttribute > 5"/>
+    <fetchRequest name="FetchRequest" entity="Entity" predicateString="booleanAttribute == 1 AND floatAttribute > 5" fetchLimit="100" fetchBatchSize="10" includeSubentities="YES" includePropertyValues="YES" returnObjectsAsFaults="YES" returnDistinctResults="YES" resultType="2"/>
     <configuration name="UnrelatedConfiguration">
         <memberEntity name="UnrelatedEntity"/>
     </configuration>

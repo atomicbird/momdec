@@ -53,7 +53,18 @@ MIT-style license, see LICENSE for details.
 
 # Limitations
 
-Min/max values on Core Data decimal attributes will not be correct if the limits are not integers, because Xcode truncates the limits to integers at compile time (rdar://problem/13677527, also on [OpenRadar](http://openradar.appspot.com/radar?id=2948402)).
+Models that were compiled with Xcode may be missing some data due to the following bugs. Since this data does not exist in the compiled model file, `momdec` cannot restore it when decompiling the model:
+
+* Min/max values on Core Data decimal attributes will not be correct if the limits are not integers, because Xcode truncates the limits to integers at compile time (rdar://problem/13677527, also on [OpenRadar](http://openradar.appspot.com/radar?id=2948402)).
+* Fetch requests will be missing any non-default values for the following settings, because they are lost when compiling with Xcode (rdar://problem/13863607, also on [OpenRadar](http://www.openradar.me/radar?id=3009404)):
+    * Result Type
+    * Fetch limit
+    * Batch size
+    * Include Subentities
+    * Include Property Values
+    * Return Objects as Faults
+    * Include Pending Changes
+    * Return Distinct Results
 
 # Credits
 
