@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Tom Harrington. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface momdecTests : SenTestCase
+@interface momdecTests : XCTestCase
 
 @end
