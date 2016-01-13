@@ -19,7 +19,7 @@
     // The following will have no effect on models compiled with Xcode until rdar://problem/13863607 is fixed,
     // because these attributes get stripped out at compile time.
     // Also see http://www.openradar.me/radar?id=3009404
-    NSString *resultTypeString = [NSString stringWithFormat:@"%d", NSManagedObjectResultType];
+    NSString *resultTypeString = [NSString stringWithFormat:@"%luu",(unsigned long) (unsigned long)NSManagedObjectResultType];
     [element addAttribute:[NSXMLNode attributeWithName:@"resultType" stringValue:resultTypeString]];
     
     NSString *fetchLimitString = [NSString stringWithFormat:@"%ld", (unsigned long)[self fetchLimit]];
