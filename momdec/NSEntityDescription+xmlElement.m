@@ -73,6 +73,9 @@
     
     // Add children for entity attributes.
     for (NSPropertyDescription *propertyDescription in [self properties]) {
+        if([self.superentity.properties containsObject:propertyDescription]){
+            continue;
+        }
         [element addChild:[propertyDescription xmlElement]];
     }
     
