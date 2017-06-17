@@ -40,14 +40,14 @@
     [[NSFileManager defaultManager] createDirectoryAtPath:momdecTestDir withIntermediateDirectories:YES attributes:0 error:nil];
     NSError *error = nil;
     NSString *decompiledModelContainerPath = [NSManagedObjectModel decompileModelAtPath:[momURL path] inDirectory:momdecTestDir error:&error];
-    STAssertNil(error, [NSString stringWithFormat:@"Error decompiling model: %@", error]);
-    STAssertTrue(([decompiledModelContainerPath length] > 0), @"Zero-length path after decompiling model");
+    XCTAssertNil(error, @"Error decompiling model: %@", error);
+    XCTAssertTrue(([decompiledModelContainerPath length] > 0), @"Zero-length path after decompiling model");
     
     // Compile the temporary file copy
     NSString *recompiledModelPath = [momdecTestDir stringByAppendingPathComponent:@"momdecTests.momd"];
     NSTask *compileTask = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/xcrun" arguments:@[@"momc", decompiledModelContainerPath, recompiledModelPath]];
     [compileTask waitUntilExit];
-    STAssertEquals([compileTask terminationStatus], 0, @"xcrun failed to compile the model, try running 'xcrun momc' in Terminal.app and trying again");
+    XCTAssertEqual([compileTask terminationStatus], 0, @"xcrun failed to compile the model, try running 'xcrun momc' in Terminal.app and trying again");
     
     // Load the recompiled model
     NSManagedObjectModel *recompiledModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:recompiledModelPath]];
@@ -58,7 +58,7 @@
     for (NSString *entityName in originalEntities) {
         NSEntityDescription *originalEntity = originalEntities[entityName];
         NSEntityDescription *recompiledEntity = recompiledEntities[entityName];
-        STAssertEqualObjects(originalEntity, recompiledEntity, @"Entities do not match: %@", entityName);
+        XCTAssertEqualObjects(originalEntity, recompiledEntity, @"Entities do not match: %@", entityName);
     }
 
     NSDictionary *originalFetchRequests = [compiledModel fetchRequestTemplatesByName];
@@ -66,12 +66,12 @@
     for (NSString *fetchRequestName in originalFetchRequests) {
         NSFetchRequest *originalFetchRequest = originalFetchRequests[fetchRequestName];
         NSFetchRequest *recompiledFetchRequest = recompiledFetchRequests[fetchRequestName];
-        STAssertEqualObjects(originalFetchRequest, recompiledFetchRequest, @"Fetch requests do not match: %@", fetchRequestName);
+        XCTAssertEqualObjects(originalFetchRequest, recompiledFetchRequest, @"Fetch requests do not match: %@", fetchRequestName);
     }
     
     NSArray *originalConfigurations = [compiledModel configurations];
     for (NSString *configurationName in originalConfigurations) {
-        STAssertEqualObjects([compiledModel entitiesForConfiguration:configurationName], [recompiledModel entitiesForConfiguration:configurationName], @"Configuration does not match: %@", configurationName);
+        XCTAssertEqualObjects([compiledModel entitiesForConfiguration:configurationName], [recompiledModel entitiesForConfiguration:configurationName], @"Configuration does not match: %@", configurationName);
     }
 }
 
@@ -86,7 +86,7 @@
         exceptionThrown = YES;
     }
     @finally {
-        STAssertTrue(exceptionThrown, @"NSPropertyDescription should throw an exception if you ask for its xmlElement");
+        XCTAssertTrue(exceptionThrown, @"NSPropertyDescription should throw an exception if you ask for its xmlElement");
     }
 }
 
