@@ -40,6 +40,10 @@
         [element addAttribute:[NSXMLNode attributeWithName:@"inverseEntity" stringValue:[[[self inverseRelationship] entity] name]]];
     }
     
+    if(self.toMany){
+        [element addAttribute:[NSXMLNode attributeWithName:@"toMany" stringValue:@"YES"]];
+    }
+    
     return element;
 }
 @end
