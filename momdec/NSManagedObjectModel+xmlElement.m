@@ -214,14 +214,11 @@
             if ([[NSFileManager defaultManager] fileExistsAtPath:storeFilenamePath]) {
                 // storeFileName contains a string formated as "Foo.sqlite". Set the model name based on that.
                 NSString *storeFilename = [NSString stringWithContentsOfFile:storeFilenamePath encoding:NSUTF8StringEncoding error:error];
-                if ([storeFilename length] == 0) {
-                    success = NO;
-                } else {
+                if ([storeFilename length] != 0) {
                     NSString *xcdatamodelFileName = [[storeFilename stringByDeletingPathExtension] stringByAppendingPathExtension:@"xcdatamodel"];
                     xcdatamodelPath = [resultDirectoryPath stringByAppendingPathComponent:xcdatamodelFileName];
                 }
             } else {
-                success = NO;
                 if (error != nil) {
                     *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: @"Incomplete baseline.zip contents"}];
                 }
